@@ -730,11 +730,13 @@ public class PatriciaTreeTest {
 
         System.out.println("\n\nisContaining - \"THE \"");
         assertFalse(patriciaTree.isContaining("THE "));
-        System.out.println("\n\n\ninsertNextKeyIntoTree - \"IS\"");
+
 
         System.out.println("\n\npatriciaTree.toString(): " + patriciaTree.toString());
-
+        System.out.println("\n\n\ninsertNextKeyIntoTree - \"IS\"");
         patriciaTree.insertNextKeyIntoTree();
+        System.out.println("\n\npatriciaTree.toString(): " + patriciaTree.toString());
+
         System.out.println("\n\nisContaining - \"THIS \"");
         assertTrue(patriciaTree.isContaining("THIS "));
 
@@ -751,6 +753,7 @@ public class PatriciaTreeTest {
         patriciaTree.insertNextKeyIntoTree();
         patriciaTree.insertNextKeyIntoTree();
         patriciaTree.insertNextKeyIntoTree();
+        patriciaTree.insertNextKeyIntoTree();
         System.out.println("\n\nisContaining - \"THIS \"");
         assertTrue(patriciaTree.isContaining("THIS "));
         System.out.println("\n\nisContaining - \"IS \"");
@@ -763,6 +766,7 @@ public class PatriciaTreeTest {
         assertTrue(patriciaTree.isContaining("THAT "));
         System.out.println("\n\nisContaining - \"JACK \"");
         assertTrue(patriciaTree.isContaining("JACK "));
+        System.out.println("\n\npatriciaTree.toString(): " + patriciaTree.toString());
         System.out.println("\n\nisContaining - \"BUILT;\"");
         assertTrue(patriciaTree.isContaining("BUILT;"));
     }

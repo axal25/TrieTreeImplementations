@@ -219,9 +219,9 @@ public class AlgorithmP {
             ) {
                 System.out.println("compareKeyToSearchWord() >>> return false;");
                 return false;
-            } else if(this.longestMatchingBitStreak < this.currentNodeBitIndex) {
-                this.longestMatchingBitStreak = this.currentNodeBitIndex;
-                System.out.println("compareKeyToSearchWord() >>> this.longestMatchingBitStreak:= " + this.longestMatchingBitStreak);
+            } else if(this.longestMatchingBitStreak < (this.currentNodeBitIndex + 1)) {
+                this.longestMatchingBitStreak = (this.currentNodeBitIndex + 1);
+                System.out.println("compareKeyToSearchWord() >>> this.longestMatchingBitStreak:= " + this.longestMatchingBitStreak + ", this.currentNodeBitIndex: " + this.currentNodeBitIndex);
             }
         }
         System.out.println("compareKeyToSearchWord() >>> return true;");

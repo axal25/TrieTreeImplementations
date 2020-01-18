@@ -25,39 +25,39 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-./target/*
-./.idea/
-./.mvn
-./mvnw
-./mvnw.cmd
+target/*
+.idea/
+.mvn
+mvnw
+mvnw.cmd
 
 HELP.md
-!./.mvn/wrapper/maven-wrapper.jar
-!./**/src/main/**
-!./**/src/test/**
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
 
 ### STS ###
-./.apt_generated
-./.classpath
-./.factorypath
-./.project
-./.settings
-./.springBeans
-./.sts4-cache
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
-./.idea
+.idea
 *.iws
 *.iml
 *.ipr
 
 ### NetBeans ###
-./nbproject/private/
-./nbbuild/
-./dist/
-./nbdist/
-./.nb-gradle/
-./build/
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
 
 ### VS Code ###
-./.vscode/
+.vscode/

@@ -17,7 +17,7 @@ public class RandomAccessReadContainer {
 
     public RandomAccessReadContainer(String filePath, String fileName) {
         final String functionName = "RandomAccessReadContainer(String filePath, String fileName)";
-        this.file = FilesOps.openExistingFile(filePath, fileName);
+        this.file = FilesHandler.openExistingFile(filePath, fileName);
         try {
             this.randomAccessFile = new RandomAccessFile(this.file, "rw");
         } catch (FileNotFoundException e) {

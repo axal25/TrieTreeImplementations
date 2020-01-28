@@ -19,7 +19,9 @@ public class MixEncoding {
         tmpMap.put('G', 7);
         tmpMap.put('H', 8);
         tmpMap.put('I', 9);
+
 //        tmpMap.put('\theta', 10);
+
         tmpMap.put('J', 11);
         tmpMap.put('K', 12);
         tmpMap.put('L', 13);
@@ -29,8 +31,11 @@ public class MixEncoding {
         tmpMap.put('P', 17);
         tmpMap.put('Q', 18);
         tmpMap.put('R', 19);
+
+        tmpMap.put(';', 20); // end of file
 //        tmpMap.put('\Phi', 20);
 //        tmpMap.put('\Pi', 21);
+
         tmpMap.put('S', 22);
         tmpMap.put('T', 23);
         tmpMap.put('U', 24);
@@ -40,32 +45,33 @@ public class MixEncoding {
         tmpMap.put('Y', 28);
         tmpMap.put('Z', 29);
         tmpMap.put('0', 30);
-//        tmpMap.put('1', 31);
-        tmpMap.put(';', 31); // end of file
-//        tmpMap.put('2', 32);
-//        tmpMap.put('3', 33);
-//        tmpMap.put('4', 34);
-//        tmpMap.put('5', 35);
-//        tmpMap.put('6', 36);
-//        tmpMap.put('7', 37);
-//        tmpMap.put('8', 38);
-//        tmpMap.put('9', 39);
-//        tmpMap.put('.', 40);
-//        tmpMap.put(',', 41);
-//        tmpMap.put('(', 42);
-//        tmpMap.put(')', 43);
-//        tmpMap.put('+', 44);
-//        tmpMap.put('-', 45);
-//        tmpMap.put('*', 46);
-//        tmpMap.put('/', 47);
-//        tmpMap.put('=', 48);
-//        tmpMap.put('$', 49);
-//        tmpMap.put('<', 50);
-//        tmpMap.put('>', 51);
-//        tmpMap.put('@', 52);
-//        tmpMap.put(';', 53);
-//        tmpMap.put(':', 54);
-//        tmpMap.put('\'', 55);
+        tmpMap.put('1', 31);
+
+        // 6 bits
+        tmpMap.put('2', 32);
+        tmpMap.put('3', 33);
+        tmpMap.put('4', 34);
+        tmpMap.put('5', 35);
+        tmpMap.put('6', 36);
+        tmpMap.put('7', 37);
+        tmpMap.put('8', 38);
+        tmpMap.put('9', 39);
+        tmpMap.put('.', 40);
+        tmpMap.put(',', 41);
+        tmpMap.put('(', 42);
+        tmpMap.put(')', 43);
+        tmpMap.put('+', 44);
+        tmpMap.put('-', 45);
+        tmpMap.put('*', 46);
+        tmpMap.put('/', 47);
+        tmpMap.put('=', 48);
+        tmpMap.put('$', 49);
+        tmpMap.put('<', 50);
+        tmpMap.put('>', 51);
+        tmpMap.put('@', 52);
+//        tmpMap.put(';', 53);      // modified // tmpMap.put(';', 20); // end of file
+        tmpMap.put(':', 54);
+        tmpMap.put('\'', 55);
         characterCodes = Collections.unmodifiableMap(tmpMap);
     }
 

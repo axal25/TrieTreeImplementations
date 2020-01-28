@@ -121,7 +121,8 @@ public class MixByteTest {
         assertNotNull(mixByte);
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-        assertEquals("00000000000000000000000000001100", mixByte.intToJavaBitsInString(intValue));
+        String expectedBytes = "00000000000000000000000000001100";
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test
@@ -134,7 +135,8 @@ public class MixByteTest {
             assertNotNull(mixByte);
             assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-            assertEquals("00000000000000000000000000011111", mixByte.intToJavaBitsInString(intValue));
+        String expectedBytes = "00000000000000000000000000011111";
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test
@@ -147,7 +149,8 @@ public class MixByteTest {
             assertNotNull(mixByte);
             assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-            assertEquals("00000000000000000000000000100000", mixByte.intToJavaBitsInString(intValue));
+        String expectedBytes = "00000000000000000000000000100000";
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test
@@ -160,7 +163,8 @@ public class MixByteTest {
         assertNotNull(mixByte);
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-        assertEquals("00000000000000000000000100101100", mixByte.intToJavaBitsInString(intValue));
+        String expectedBytes = "00000000000000000000000100101100";
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test

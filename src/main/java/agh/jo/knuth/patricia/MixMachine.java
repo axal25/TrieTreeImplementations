@@ -20,8 +20,10 @@ public class MixMachine {
         setEncoding(encoding);
         setAmountOfBits();
     }
+
     private void setAmountOfBits() throws Exception {
         if(this.getEncoding() == Encoding.MIX) this.amountOfBits = 5;
+        // FileOperations reads byte one by one (8 bits at a time), then creates String(bytes, "UTF-8"); which is enough for most characters in ASCII
         else if(this.getEncoding() == Encoding.JAVA) this.amountOfBits = 8;
         else throw new Exception("Bad encoding: " + this.getEncoding());
     }
@@ -36,7 +38,8 @@ public class MixMachine {
 
     protected String getBinaryString(int characterCode) throws Exception {
         if(this.getEncoding() == Encoding.MIX) return new MixByte(this.amountOfBits, characterCode).getBytesToMixBinaryString();
-        else if(this.getEncoding() == Encoding.JAVA) return String.format("%0" + MixByte.intBitLength + "d", Integer.parseInt(Integer.toBinaryString(characterCode)));
+        // FileOperations reads byte one by one (8 bits at a time), then creates String(bytes, "UTF-8"); which is enough for most characters in ASCII
+        else if(this.getEncoding() == Encoding.JAVA) return String.format("%0" + this.amountOfBits + "d", Integer.parseInt(Integer.toBinaryString(characterCode)));
         else throw new Exception("Bad encoding: " + this.getEncoding());
     }
 

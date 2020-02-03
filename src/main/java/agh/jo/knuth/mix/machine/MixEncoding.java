@@ -1,12 +1,20 @@
 package agh.jo.knuth.mix.machine;
 
-import java.util.BitSet;
+import agh.jo.knuth.patricia.PatriciaNode;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
+@Setter
 public class MixEncoding {
-    private static final Map<Character, Integer> characterCodes;
+    public static final int GreekCapitalLetter_CharCode_Phi = 934;
+    public static final int GreekSmallLetter_CharCode_theta = 952;
+    public static final int GreekCapitalLetter_CharCode_Pi = 928;
+    public static final Map<Character, Integer> statCharCodes;
     static {
         Map<Character, Integer> tmpMap = new HashMap<Character, Integer>();
         tmpMap.put(' ', 0);
@@ -20,7 +28,7 @@ public class MixEncoding {
         tmpMap.put('H', 8);
         tmpMap.put('I', 9);
 
-//        tmpMap.put('\theta', 10);
+        tmpMap.put((char) GreekSmallLetter_CharCode_theta, 10);
 
         tmpMap.put('J', 11);
         tmpMap.put('K', 12);
@@ -32,9 +40,8 @@ public class MixEncoding {
         tmpMap.put('Q', 18);
         tmpMap.put('R', 19);
 
-        tmpMap.put(';', 20); // end of file
-//        tmpMap.put('\Phi', 20);
-//        tmpMap.put('\Pi', 21);
+        tmpMap.put((char) GreekCapitalLetter_CharCode_Phi, 20);
+        tmpMap.put((char) GreekCapitalLetter_CharCode_Pi, 21);
 
         tmpMap.put('S', 22);
         tmpMap.put('T', 23);
@@ -69,19 +76,59 @@ public class MixEncoding {
         tmpMap.put('<', 50);
         tmpMap.put('>', 51);
         tmpMap.put('@', 52);
-//        tmpMap.put(';', 53);      // modified // tmpMap.put(';', 20); // end of file
+        tmpMap.put(';', 53);
         tmpMap.put(':', 54);
         tmpMap.put('\'', 55);
-        characterCodes = Collections.unmodifiableMap(tmpMap);
+        statCharCodes = Collections.unmodifiableMap(tmpMap);
+    }
+    private Map<Character, Integer> charCodes;
+    private char charEOF; // End Of File character
+    private char charEOK; // End Of Key character // start of another Key
+
+    public MixEncoding(char charEOF, char charEOK) {
+        this.charEOF = charEOF;
+        this.charEOK = charEOK;
+        this.charCodes = new HashMap<Character, Integer>();
+        statCharCodes.forEach(
+                (key, value) -> { charCodes.put(key, value); }
+        );
+        putCharEOFInThePlaceOfChar1Value31();
+        putCharEOKInThePlaceOfChar0Value30();
     }
 
-    public static Integer charToInt(char inputChar) throws Exception {
-        inputChar = Character.toUpperCase(inputChar);
-        if( MixEncoding.characterCodes.containsKey(inputChar)) {
-            return MixEncoding.characterCodes.get(inputChar);
+    private void putCharEOFInThePlaceOfChar1Value31() {
+        replaceOrSwapPlaces(charEOF, '1');
+    }
+
+    private void putCharEOKInThePlaceOfChar0Value30() {
+        replaceOrSwapPlaces(charEOK, '0');
+    }
+
+    private void replaceOrSwapPlaces(char toInsertKeyChar, char toReplaceKeyChar) {
+        int valueToReplaceKeyChar = this.charCodes.get(toReplaceKeyChar);
+        this.charCodes.remove(toReplaceKeyChar);
+        boolean previouslyContainedToInsertKeyChar = this.charCodes.containsKey(toInsertKeyChar);
+        int valueToInsertKeyChar = this.charCodes.get(toInsertKeyChar);
+        this.charCodes.remove(toInsertKeyChar);
+        this.charCodes.put(toInsertKeyChar, valueToReplaceKeyChar);
+        if(previouslyContainedToInsertKeyChar) this.charCodes.put(toReplaceKeyChar, valueToInsertKeyChar);
+    }
+
+    public Integer charToInt(char inputChar) throws Exception {
+        if(inputChar != (char) GreekSmallLetter_CharCode_theta) inputChar = Character.toUpperCase(inputChar);
+        if( this.charCodes.containsKey(inputChar)) {
+            return this.charCodes.get(inputChar);
         }
-        else throw new Exception("Knuth's Mix Machine does not have such character in its representation or " +
-                "it's one of 3 character java is unable to represent using Character type (\\theta - 10, \\Phi - 20, \\Pi - 21). " +
-                "Your character = '" +  inputChar + "'");
+        else throw new Exception("Knuth's Mix Machine does not have such character in its representation. " +
+                "Your character = '" +  inputChar + "' (UTF-16: " + ((int) inputChar) + ")");
+    }
+
+    @Override
+    public String toString() {
+        return "MixEncoding{" +
+                "\n\tcharCodes=" + charCodes +
+                ",\n\tcharEOF=" + charEOF +
+                ",\n\tcharEOK=" + charEOK +
+                "\n}";
     }
 }

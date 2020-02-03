@@ -1,7 +1,6 @@
 package agh.jo.knuth.mix.machine;
 
 import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -122,7 +121,7 @@ public class MixByteTest {
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
         String expectedBytes = "00000000000000000000000000001100";
-        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.MAX_UTF8_CHAR_BIT_LENGTH), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test
@@ -136,7 +135,7 @@ public class MixByteTest {
             assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
         String expectedBytes = "00000000000000000000000000011111";
-        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.MAX_UTF8_CHAR_BIT_LENGTH), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test
@@ -150,7 +149,7 @@ public class MixByteTest {
             assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
         String expectedBytes = "00000000000000000000000000100000";
-        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.MAX_UTF8_CHAR_BIT_LENGTH), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test
@@ -164,7 +163,7 @@ public class MixByteTest {
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
         String expectedBytes = "00000000000000000000000100101100";
-        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.charBitLength), mixByte.intToJavaBitsInString(intValue));
+        assertEquals(expectedBytes.substring(expectedBytes.length() - MixByte.MAX_UTF8_CHAR_BIT_LENGTH), mixByte.intToJavaBitsInString(intValue));
     }
 
     @Test

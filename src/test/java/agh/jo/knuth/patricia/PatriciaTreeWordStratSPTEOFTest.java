@@ -1,8 +1,13 @@
 package agh.jo.knuth.patricia;
 
+import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
 import agh.jo.knuth.patricia.file.ops.FileOpsStrategy;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
 
+import java.nio.charset.Charset;
+
+import static agh.jo.knuth.patricia.file.ops.FileOpsStrategyAbstractTest.concatStringArray;
+import static agh.jo.knuth.patricia.file.ops.FileOpsStrategyAbstractTest.getByteAmount;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -11,6 +16,7 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
 
     public static void assertGetCharCodeOfGetCharFromFileAtPositionEquals(
             int[] charCodeArray,
+            String[] fileStringArray,
             MixMachine mixMachine,
             FileOpsStrategy fileOpsStrategy,
             int startPosition,
@@ -20,11 +26,18 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
         if(charCodeArray.length != (endPosition - startPosition +1)) throw new Exception("Char code array length does not match amount of positions." +
                 " charCodeArray.length: " + charCodeArray.length + " (endPosition - startPosition +1): " + (endPosition - startPosition +1));
         for (int i = startPosition; i < endPosition; i++) {
-            assertGetCharCodeOfGetCharFromFileAtPositionEquals(charCodeArray[i-startPosition], mixMachine, fileOpsStrategy, i, isDoGetCharBytes);
+            assertGetSingleCharCodeOfGetCharFromFileAtPositionEquals(charCodeArray[i-startPosition], mixMachine, fileOpsStrategy, getBytePosition(fileStringArray, i), isDoGetCharBytes);
         }
     }
 
-    public static void assertGetCharCodeOfGetCharFromFileAtPositionEquals(
+    public static int getBytePosition(String[] fileStringArray, int startCharPositionIndex) {
+        if(startCharPositionIndex == 0) return 0;
+        String wholeFileContent = concatStringArray(fileStringArray, 0, fileStringArray.length-1);
+        String skippedFileContent = wholeFileContent.substring(0, startCharPositionIndex);
+        return skippedFileContent.getBytes(Charset.forName("UTF-8")).length;
+    }
+
+    public static void assertGetSingleCharCodeOfGetCharFromFileAtPositionEquals(
             int expectedCharCode,
             MixMachine mixMachine,
             FileOpsStrategy fileOpsStrategy,
@@ -32,13 +45,14 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             boolean isDoGetCharBytes
     ) throws Exception {
         int actualCharCode = mixMachine.getCharCode(fileOpsStrategy.getCharFromFileAtPosition(position));
-        if(isDoGetCharBytes) actualCharCode = mixMachine.getCharBytes(actualCharCode)[0];
+        assertEquals(expectedCharCode, actualCharCode);
+        if(isDoGetCharBytes) actualCharCode = MixMachine.javaBytesToInt( mixMachine.getCharBytes(actualCharCode) );
         assertEquals(expectedCharCode, actualCharCode);
     }
 
     public static void assertGetBinaryStringOfGetCharCodeOfGetCharFromFileAtPositionEquals(
             String[] binaryStringArray,
-            MixMachine mixMachine,
+            String[] fileStringArray, MixMachine mixMachine,
             FileOpsStrategy fileOpsStrategy,
             int startPosition,
             int endPosition
@@ -46,7 +60,7 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
         if(binaryStringArray.length != (endPosition - startPosition +1)) throw new Exception("String code array length does not match amount of positions." +
                 " binaryStringArray.length: " + binaryStringArray.length + " (endPosition - startPosition +1): " + (endPosition - startPosition +1));
         for (int i = startPosition; i < endPosition; i++) {
-            assertGetBinaryStringOfGetCharCodeOfGetCharFromFileAtPositionEquals(binaryStringArray[i-startPosition], mixMachine, fileOpsStrategy, i);
+            assertGetBinaryStringOfGetCharCodeOfGetCharFromFileAtPositionEquals(binaryStringArray[i-startPosition], mixMachine, fileOpsStrategy, getBytePosition(fileStringArray, i));
         }
     }
 
@@ -64,7 +78,7 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             MixMachine mixMachine,
             FileOpsStrategy fileOpsStrategy,
             String[] binaryStringArray,
-            int[] startPositionIndexArray,
+            String[] fileStringArray, int[] startPositionIndexArray,
             int[] endPositionIndexArray
     ) throws Exception {
         if(startPositionIndexArray.length != endPositionIndexArray.length)
@@ -72,7 +86,7 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
                     " startPositionIndexArray.length: " + startPositionIndexArray.length +
                     " endPositionIndexArray.length: " + endPositionIndexArray.length);
         for (int i = 0; i < startPositionIndexArray.length; i++) {
-            assertConcatGetByteString(mixMachine, fileOpsStrategy, binaryStringArray, startPositionIndexArray[i], endPositionIndexArray[i]);
+            assertConcatGetByteString(mixMachine, fileOpsStrategy, binaryStringArray, fileStringArray, startPositionIndexArray[i], endPositionIndexArray[i]);
         }
     }
 
@@ -80,15 +94,17 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             MixMachine mixMachine,
             FileOpsStrategy fileOpsStrategy,
             String[] binaryStringArray,
+            String[] fileStringArray,
             int startPositionIndex,
             int endPositionIndex
     ) throws Exception {
         StringBuilder actualChars = new StringBuilder();
         StringBuilder expectedByteString = new StringBuilder();
         for (int i = startPositionIndex; i < endPositionIndex+1; i++) {
-            actualChars.append(fileOpsStrategy.getCharFromFileAtPosition(i));
+            actualChars.append(fileOpsStrategy.getCharFromFileAtPosition(getBytePosition(fileStringArray, i)));
             expectedByteString.append(binaryStringArray[i]);
         }
+        System.err.println("actualChars: \"" + actualChars + "\"");
         String actualByteString = mixMachine.getBinaryString(actualChars.toString());
         assertEquals(expectedByteString.toString(), actualByteString);
     }
@@ -98,42 +114,47 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             String[] binaryStringArray,
             int[] startPositionIndexArray,
             int[] endPositionIndexArray,
-            int expectedAmountOfBits
-    ) throws Exception {
+            int expectedAmountOfBits,
+            String[] fileStringArray, Encoding encoding) throws Exception {
         if(startPositionIndexArray.length != endPositionIndexArray.length)
             throw new Exception("Start and End position / index arrays are not the same length." +
                     " startPositionIndexArray.length: " + startPositionIndexArray.length +
                     " endPositionIndexArray.length: " + endPositionIndexArray.length);
         for (int i = 0; i < startPositionIndexArray.length; i++) {
-            assertGetNumberOfBitsFromFileAtPosition(patriciaTree, binaryStringArray, startPositionIndexArray[i], endPositionIndexArray[i], expectedAmountOfBits);
+            assertGetNumberOfBitsFromFileAtPosition(patriciaTree, encoding, binaryStringArray, fileStringArray, startPositionIndexArray[i], endPositionIndexArray[i], expectedAmountOfBits);
         }
     }
 
     public void assertGetNumberOfBitsFromFileAtPosition(
             PatriciaTree patriciaTree,
-            String[] binaryStringArray,
-            int startPositionIndex,
-            int endPositionIndex,
-            int expectedAmountOfBits
-    ) throws Exception {
-        StringBuilder expectedByteString = new StringBuilder();
-        for (int i = startPositionIndex; i < endPositionIndex+1; i++) {
-            expectedByteString.append(binaryStringArray[i]);
-        }
+            Encoding encoding, String[] binaryStringArray,
+            String[] fileStringArray,
+            int startCharPositionIndex,
+            int endCharPositionIndex,
+            int expectedAmountOfBits) throws Exception {
+        String expectedByteString = concatStringArray(binaryStringArray, startCharPositionIndex, endCharPositionIndex);
+
         int actualMixMachineAmountOfBits = patriciaTree.getMixMachine().getAmountOfBits();
         assertEquals(expectedAmountOfBits, actualMixMachineAmountOfBits);
-        int actualFragmentAmountOfBits = actualMixMachineAmountOfBits*(endPositionIndex-startPositionIndex+1);
-        String actualFragmentByteString = patriciaTree.getNumberOfBitsFromFileAtPosition(actualFragmentAmountOfBits, startPositionIndex);
-        assertEquals(expectedByteString.toString(), actualFragmentByteString);
+
+        int actualFragmentAmountOfBits = actualMixMachineAmountOfBits *
+                getByteAmount(fileStringArray, startCharPositionIndex, endCharPositionIndex, patriciaTree.getMixMachine());
+        int startBytePositionIndex = getBytePosition(fileStringArray, startCharPositionIndex);
+        String actualFragmentByteString = patriciaTree.getNumberOfBitsFromFileAtPosition(actualFragmentAmountOfBits, startBytePositionIndex);
+        assertEquals(expectedByteString, actualFragmentByteString);
     }
 
-    public void assertIsContainingCharOneByOne(PatriciaTree patriciaTree, int amountOfCharsInsideFile) throws Exception {
-        StringBuilder wholeFileContents = new StringBuilder();
-        for (int i = 0; i < amountOfCharsInsideFile; i++) {
-            wholeFileContents.append(patriciaTree.getFileOps().getFileOpsStrategy().getCharFromFileAtPosition(i));
+    public void assertIsContainingAllPrefixes(PatriciaTree patriciaTree, int[] startPositionIndexArray, String[] fileStringArray) throws Exception {
+        for (int i = 0; i < startPositionIndexArray.length; i++) {
+            assertIsContainingSinglePrefix(patriciaTree, startPositionIndexArray[i], fileStringArray);
         }
-        for (int i = 0; i < wholeFileContents.length(); i++) {
-            assertTrue(patriciaTree.isContaining(wholeFileContents.substring(0, i)));
+    }
+
+    public void assertIsContainingSinglePrefix(PatriciaTree patriciaTree, int keyStartPosition, String[] fileStringArray) throws Exception {
+        String wholeFileContents = concatStringArray(fileStringArray, 0, fileStringArray.length-1);
+        for (int i = keyStartPosition+1; i < wholeFileContents.length(); i++) {
+            String keyPrefix = wholeFileContents.substring(keyStartPosition, i);
+            assertTrue(patriciaTree.isContainingPrefix(keyPrefix));
         }
     }
 
@@ -143,21 +164,17 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
                     " startPositionIndexArray.length: " + startPositionIndexArray.length +
                     " fileStringArray.length: " + fileStringArray.length);
         for (int i = 0; i < startPositionIndexArray.length; i++) {
-            if(i!=0) assertFindNextWordStartIndex(fileOpsStrategy, startPositionIndexArray[i-1], startPositionIndexArray[i]);
+            if(i!=0) assertFindNextWordStartIndex(
+                    fileOpsStrategy,
+                    getBytePosition(fileStringArray, startPositionIndexArray[i-1]),
+                    getBytePosition(fileStringArray, startPositionIndexArray[i])
+            );
             String expectedKeyStartIndex = concatStringArray(fileStringArray, i, fileStringArray.length-1);
-            assertGetWordStringFromFileStartingAtPosition(fileOpsStrategy, startPositionIndexArray[i], expectedKeyStartIndex);
+            assertGetWordStringFromFileStartingAtPosition(fileOpsStrategy, getBytePosition(fileStringArray, startPositionIndexArray[i]), expectedKeyStartIndex);
         }
     }
 
-    public String concatStringArray(String[] array, int startIndex, int endIndex) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = startIndex; i < endIndex+1 && i < array.length; i++) {
-            stringBuilder.append(array[i]);
-        }
-        return stringBuilder.toString();
-    }
-
-    public void assertFindNextWordStartIndex(FileOpsStrategy fileOpsStrategy, int prevKeyStartIndex, int expectedKeyStartIndex) {
+    public void assertFindNextWordStartIndex(FileOpsStrategy fileOpsStrategy, int prevKeyStartIndex, int expectedKeyStartIndex) throws Exception {
         int newKeyStartIndex = fileOpsStrategy.findNextWordStartIndex(prevKeyStartIndex);
         assertEquals(expectedKeyStartIndex, newKeyStartIndex);
     }
@@ -170,10 +187,13 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
     public PatriciaTree getNewInitiatedPatriciaTreeAndAssert(
             String filePath,
             String fileName,
+            char charEOF,
+            char charEOK,
+            WordStrategy wordStrategy,
             Encoding encoding,
-            String[] fileStringArray,
-            WordStrategy wordStrategy) throws Exception {
-        PatriciaTree patriciaTree = new PatriciaTree(filePath, fileName, encoding, wordStrategy);
+            String[] fileStringArray
+    ) throws Exception {
+        PatriciaTree patriciaTree = new PatriciaTree(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
         assertNotNull(patriciaTree);
         assertNotNull(patriciaTree.getMixMachine());
         assertNotNull(patriciaTree.getFileOps().getFileOpsStrategy());
@@ -193,14 +213,16 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
         assertTrue(patriciaTree.getHeader().getIsLeftAncestor());
         assertNull(patriciaTree.getHeader().getRightLink());
         assertFalse(patriciaTree.getHeader().getIsRightAncestor());
-        assertIsContaining(patriciaTree, fileStringArray, 1);
+        assertIsContainingPrefix(patriciaTree, fileStringArray, 1);
         return patriciaTree;
     }
 
-    public void assertIsContaining(PatriciaTree patriciaTree, String[] fileStringArray, int amountOfNodes) throws Exception {
+    public void assertIsContainingPrefix(PatriciaTree patriciaTree, String[] fileStringArray, int amountOfNodes) throws Exception {
         for (int i = 0; i < fileStringArray.length; i++) {
-            boolean isContaining = patriciaTree.isContaining(fileStringArray[i]);
-            if(i < amountOfNodes) assertTrue(isContaining);
+            boolean isContaining = patriciaTree.isContainingPrefix(fileStringArray[i]);
+            if(i < amountOfNodes) {
+                assertTrue(isContaining);
+            }
             else assertFalse(isContaining);
         }
     }
@@ -208,27 +230,32 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
     public PatriciaTree getPatriciaTreeWithXNodesAndAssert(
             String filePath,
             String fileName,
+            char charEOF,
+            char charEOK,
+            WordStrategy wordStrategy,
             Encoding encoding,
             String[] fileStringArray,
-            int amountOfNodes, WordStrategy wordStrategy) throws Exception {
+            int amountOfNodes
+    ) throws Exception {
         if(amountOfNodes < 0) throw new Exception("Patricia tree can't have less nodes than 1. It always has at least one (header) node. amountOfNodes: " + amountOfNodes);
         if(amountOfNodes > fileStringArray.length) throw new Exception("This patricia tree can't have more nodes than there are words in file. fileStringArray.length: " + fileStringArray.length);
-        PatriciaTree patriciaTree = getNewInitiatedPatriciaTreeAndAssert(filePath, fileName, encoding, fileStringArray, wordStrategy);
+        PatriciaTree patriciaTree = getNewInitiatedPatriciaTreeAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, fileStringArray);
         for (int i = 1; i < amountOfNodes; i++) {
             patriciaTree.insertNextKeyIntoTree();
-            assertIsContaining(patriciaTree, fileStringArray, i+1);
+            assertIsContainingPrefix(patriciaTree, fileStringArray, i+1);
         }
         return patriciaTree;
     }
 
-    public void assertFindNodesMatching(PatriciaTree patriciaTree, String[] fileStringArray) throws Exception {
+    public void assertFindNodesMatchingAllPermutationsOfSinglePrefix(PatriciaTree patriciaTree, String[] fileStringArray) throws Exception {
         for (int i = 0; i < fileStringArray.length; i++) {
-            assertFindNodesMatching(patriciaTree, fileStringArray[i], concatStringArray(fileStringArray, i,fileStringArray.length-1), i);
+            assertFindNodesMatchingSinglePrefix(patriciaTree, fileStringArray[i], concatStringArray(fileStringArray, i,fileStringArray.length-1), i);
         }
     }
 
-    public void assertFindNodesMatching(PatriciaTree patriciaTree, String searchWord, String expectedWordString, int expectedNodeId) throws Exception {
-        PatriciaNode[] patriciaNodes = patriciaTree.findNodesMatching(searchWord);
+    public void assertFindNodesMatchingSinglePrefix(PatriciaTree patriciaTree, String searchWord, String expectedWordString, int expectedNodeId) throws Exception {
+        PatriciaNode[] patriciaNodes = patriciaTree.findNodesMatchingPrefix(searchWord);
+        assertNotNull(patriciaNodes);
         assertEquals(1, patriciaNodes.length);
         for (int i = 0; i < patriciaNodes.length; i++) {
             assertEquals(expectedNodeId, patriciaNodes[i].getId());
@@ -237,7 +264,7 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
     }
 
     public void assertFindMultipleNodesMatching(PatriciaTree patriciaTree, String searchWord, int[] expectedNodeIds, String[] fileStringArray) throws Exception {
-        PatriciaNode[] foundNodes = patriciaTree.findNodesMatching(searchWord);
+        PatriciaNode[] foundNodes = patriciaTree.findNodesMatchingPrefix(searchWord);
         assertEquals(expectedNodeIds.length, foundNodes.length);
         for (int i = 0; i < expectedNodeIds.length; i++) {
             assertEquals(expectedNodeIds[i], foundNodes[i].getId());
@@ -249,16 +276,32 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
         }
     }
 
-    public PatriciaTree patriciaTreeNodesToStringAssert(String filePath,
-                                                         String fileName,
-                                                         Encoding encoding,
-                                                         String[] fileStringArray,
-                                                         int amountOfNodes, WordStrategy wordStrategy,
-                                                         String[] headerRepresentations
+    public PatriciaTree patriciaTreeNodesToStringAssert(
+            String filePath,
+            String fileName,
+            char charEOF,
+            char charEOK,
+            WordStrategy wordStrategy,
+            Encoding encoding,
+            String[] fileStringArray,
+            int amountOfNodes,
+            String[] headerRepresentations
     ) throws Exception {
         PatriciaTree patriciaTree =
-                getPatriciaTreeWithXNodesAndAssert(filePath, fileName, encoding, fileStringArray, amountOfNodes, wordStrategy);
+                getPatriciaTreeWithXNodesAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, fileStringArray, amountOfNodes);
         assertEquals(headerRepresentations[amountOfNodes-1], patriciaTree.getHeader().toString());
         return patriciaTree;
+    }
+
+    public void assertGetNumberOfBitsFromFileAtPositionAfterEOF(PatriciaTree patriciaTree, int[] endPositionIndexArray, String[] fileStringArray) throws Exception {
+        int node7thKeyEndPositionChar = endPositionIndexArray[endPositionIndexArray.length-1];
+        int node7thKeyEndPositionByte = getBytePosition(fileStringArray, node7thKeyEndPositionChar);
+        String readBytes = null;
+        int amountOfBitsPerByte = -1;
+        if(patriciaTree.getMixMachine().getEncoding() == Encoding.MIX) amountOfBitsPerByte = 5;
+        if(patriciaTree.getMixMachine().getEncoding() == Encoding.JAVA) amountOfBitsPerByte = 8;
+        readBytes = patriciaTree.getFileOps().getFileOpsStrategy().getNumberOfCharsBasedOnNumberOfBitsFromFileAtPosition(1000*amountOfBitsPerByte, node7thKeyEndPositionByte);
+        assertEquals(1, readBytes.length());
+        assertEquals(patriciaTree.getFileOps().getFileOpsStrategy().getCharEOF(), readBytes.charAt(0));
     }
 }

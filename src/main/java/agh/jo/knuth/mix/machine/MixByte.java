@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class MixByte {
     private int amountOfBits;
     private byte bytes[];
-    static final public int charBitLength = 32;
+    static final public int MAX_UTF8_CHAR_BIT_LENGTH = 32;
     // FileOperations reads byte one by one (8 bits at a time), then creates String(bytes, "UTF-8"); which is enough for most characters in ASCII
 
     public MixByte(int amountOfBits, int intValue) throws Exception {
@@ -40,7 +40,7 @@ public class MixByte {
     }
 
     protected String intToJavaBitsInString(int intValue) {
-        return String.format("%0" + MixByte.charBitLength + "d", Integer.parseInt(Integer.toBinaryString(intValue)));
+        return String.format("%0" + MixByte.MAX_UTF8_CHAR_BIT_LENGTH + "d", Integer.parseInt(Integer.toBinaryString(intValue)));
     }
 
     protected String javaBitsToMixBitsInString(String stringJavaBits) throws Exception {

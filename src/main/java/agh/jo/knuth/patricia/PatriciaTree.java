@@ -1,7 +1,6 @@
 package agh.jo.knuth.patricia;
 
 import agh.jo.knuth.patricia.file.ops.FileOps;
-import agh.jo.knuth.patricia.file.ops.FileOpsStrategy;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
 import agh.jo.utils.exceptions.NotForUseException;
 import lombok.Getter;
@@ -16,42 +15,45 @@ public class PatriciaTree {
     private PatriciaNode header;
     private int nextNodeIdToInsert;
 
+    public static final boolean printProcessingInfo = false;
+    public static final boolean printNonCriticalExceptionInfo = false;
+
     /** Constructors **/
 
     private PatriciaTree() throws NotForUseException { throw new NotForUseException(this.getClass().getName(), "PatriciaTree()", "Not for use, implementation not possible."); }
-    public PatriciaTree(String filePath, String fileName) throws Exception {
-        this(filePath, fileName, Encoding.JAVA, WordStrategy.START_POSITION_TO_EOF);
+    public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK) throws Exception {
+        this(filePath, fileName, charEOF, charEOK, WordStrategy.START_POSITION_TO_EOF, Encoding.JAVA);
     }
-    public PatriciaTree(String filePath, String fileName, Encoding encoding) throws Exception {
-        setFileOps(filePath, fileName);
-        setMixMachine(encoding);
+    public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, Encoding encoding) throws Exception {
+        setFileOps(filePath, fileName, charEOF, charEOK);
+        setMixMachine(encoding, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
         initLookUpLogic();
         initInsertLogic();
         initSearchLogic();
     }
-    public PatriciaTree(String filePath, String fileName, Encoding encoding, int amountOfBits) throws Exception {
-        setFileOps(filePath, fileName);
-        setMixMachine(encoding, amountOfBits);
+    public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, Encoding encoding, int amountOfBits) throws Exception {
+        setFileOps(filePath, fileName, charEOF, charEOK);
+        setMixMachine(encoding, amountOfBits, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
         initLookUpLogic();
         initInsertLogic();
         initSearchLogic();
     }
-    public PatriciaTree(String filePath, String fileName, Encoding encoding, WordStrategy wordStrategy) throws Exception {
-        setFileOps(filePath, fileName, wordStrategy);
-        setMixMachine(encoding);
+    public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding) throws Exception {
+        setFileOps(filePath, fileName, charEOF, charEOK, wordStrategy);
+        setMixMachine(encoding, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
         initLookUpLogic();
         initInsertLogic();
         initSearchLogic();
     }
-    public PatriciaTree(String filePath, String fileName, Encoding encoding, int amountOfBits, WordStrategy wordStrategy) throws Exception {
-        setFileOps(filePath, fileName, wordStrategy);
-        setMixMachine(encoding, amountOfBits);
+    public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding, int amountOfBits) throws Exception {
+        setFileOps(filePath, fileName, charEOF, charEOK, wordStrategy);
+        setMixMachine(encoding, amountOfBits, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
         initLookUpLogic();
@@ -61,16 +63,16 @@ public class PatriciaTree {
 
     /** Setters **/
 
-    private void setFileOps(String filePath, String fileName) throws Exception {
-        this.fileOps = new FileOps(filePath, fileName);
+    private void setFileOps(String filePath, String fileName, char charEOF, char charEOK) throws Exception {
+        this.fileOps = new FileOps(this, filePath, fileName, charEOF, charEOK);
     }
 
-    private void setFileOps(String filePath, String fileName, WordStrategy wordStrategy) throws Exception {
-        this.fileOps = new FileOps(filePath, fileName, wordStrategy);
+    private void setFileOps(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy) throws Exception {
+        this.fileOps = new FileOps(this, filePath, fileName, charEOF, charEOK, wordStrategy);
     }
 
-    private void setMixMachine(Encoding encoding, int amountOfBits) { this.mixMachine = new MixMachine(encoding, amountOfBits); }
-    private void setMixMachine(Encoding encoding) throws Exception { this.mixMachine = new MixMachine(encoding); }
+    private void setMixMachine(Encoding encoding, int amountOfBits, char charEOF, char charEOK) throws Exception { this.mixMachine = new MixMachine(encoding, amountOfBits, charEOF, charEOK); }
+    private void setMixMachine(Encoding encoding, char charEOF, char charEOK) throws Exception { this.mixMachine = new MixMachine(encoding, charEOF, charEOK); }
 
     private void setHeader(PatriciaNode header) throws Exception { setHeader(); }
     private void setHeader() throws Exception {
@@ -110,9 +112,9 @@ public class PatriciaTree {
     /** Public methods **/
 
     // Algorithm P | Look-up
-    public boolean isContaining(String searchWord) throws Exception {
+    public boolean isContainingPrefix(String searchWord) throws Exception {
         String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
-        return this.lookUpLogic.isContaining(binarySearchWordString);
+        return this.lookUpLogic.isContainingPrefix(binarySearchWordString);
     }
 
     // Algorithm P + | Insert
@@ -124,17 +126,16 @@ public class PatriciaTree {
     }
 
     // Algorithm P + | Search
-    public PatriciaNode[] findNodesMatching(String searchWord) throws Exception {
+    public PatriciaNode[] findNodesMatchingPrefix(String searchWord) throws Exception {
         String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
-        PatriciaNode[] matchingNodes = this.searchLogic.findNodesMatching(binarySearchWordString);
-        return matchingNodes;
+        PatriciaNode[] nodesMatchingPrefix = this.searchLogic.findNodesMatchingPrefix(binarySearchWordString);
+        return nodesMatchingPrefix;
     }
 
     /** Protected (internal) methods **/
 
     protected String getNumberOfBitsFromFileAtPosition(int requestedAmountOfBits, int position) throws Exception {
-        int amountOfBytes = (int) Math.ceil((float) requestedAmountOfBits / this.mixMachine.getAmountOfBits());
-        String charChain = this.fileOps.getFileOpsStrategy().getNumberOfCharsFromFileAtPosition(amountOfBytes, position);
+        String charChain = this.fileOps.getFileOpsStrategy().getNumberOfCharsBasedOnNumberOfBitsFromFileAtPosition(requestedAmountOfBits, position);
         String binaryString = this.mixMachine.getBinaryString( charChain );
         binaryString = cutStringToLength(binaryString, requestedAmountOfBits);
         return binaryString;
@@ -142,11 +143,7 @@ public class PatriciaTree {
 
     protected String cutStringToLength(String string, int length) {
         if(string.length() > length) {
-            StringBuilder binaryStringWithoutExcessiveBits = new StringBuilder();
-            for (int i = 0; i < length; i++) {
-                binaryStringWithoutExcessiveBits.append(string.charAt(i));
-            }
-            string = binaryStringWithoutExcessiveBits.toString();
+            string = string.substring(0, length);
         }
         return string;
     }

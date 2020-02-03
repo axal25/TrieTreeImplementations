@@ -15,9 +15,9 @@ public class SearchLogic {
         setOwner(owner);
     }
 
-    protected PatriciaNode[] findNodesMatching(String binarySearchWordString) throws Exception {
+    protected PatriciaNode[] findNodesMatchingPrefix(String binarySearchWordString) throws Exception {
         LookUpLogic lookUpLogic = new LookUpLogic(getOwner());
-        if(lookUpLogic.isContaining(binarySearchWordString)) {
+        if(lookUpLogic.isContainingPrefix(binarySearchWordString)) {
             if(lookUpLogic.getCurrentSearchWordBitIndex() < binarySearchWordString.length()) {
                 PatriciaNode[] onlyMatchingNode = new PatriciaNode[1];
                 onlyMatchingNode[0] = lookUpLogic.getCurrentNode();

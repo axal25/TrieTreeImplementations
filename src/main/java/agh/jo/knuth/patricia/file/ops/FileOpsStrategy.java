@@ -1,95 +1,67 @@
 package agh.jo.knuth.patricia.file.ops;
 
-import agh.jo.knuth.patricia.PatriciaTree;
-import agh.jo.utils.file.ExceptionMessageGenerator;
 import agh.jo.utils.file.RandomAccessReadContainer;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.*;
+import java.io.EOFException;
+import java.nio.charset.Charset;
 
 @Getter
 public abstract class FileOpsStrategy {
+    private FileOps owner;
     private String filePath;
     @Setter
     private String fileName;
+    @Setter
+    private char charEOF; // End Of File character
+    @Setter
+    private char charEOK; // End Of Key character // start of another Key
 
     private FileOpsStrategy() {}
-    protected FileOpsStrategy(String filePath, String fileName) {
+    protected FileOpsStrategy(FileOps owner, String filePath, String fileName, char charEOF, char charEOK) {
+        this.owner = owner;
         setFilePath(filePath);
         setFileName(fileName);
+        setCharEOF(charEOF);
+        setCharEOK(charEOK);
     }
 
     private void setFilePath(String filePath) {
         this.filePath = System.getProperty("user.dir") + filePath;
     }
 
-    public abstract String getWordStringFromFileStartingAtPosition(int newKeyStartIndex);
+    public abstract String getWordStringFromFileStartingAtPosition(int newKeyStartIndex) throws Exception;
 
-    public int findNextWordStartIndex(int latestInsertedNodeKeyPosition) {
+    public abstract String getNumberOfCharsBasedOnNumberOfBitsFromFileAtPosition(int requestedAmountOfBits, int position) throws Exception;
+
+    public int findNextWordStartIndex(int latestInsertedNodeKeyPosition) throws Exception {
         final String functionName = "String findNewKeyStartIndex(int latestInsertedNodeKeyPosition)";
-        boolean isSpaceCharacterEncountered = false;
-        int newKeyStartIndex = latestInsertedNodeKeyPosition;
+        boolean isEOKEncountered = false;
         String singleCharacter = null;
+        int newKeyStartIndex = latestInsertedNodeKeyPosition;
         RandomAccessReadContainer randomAccessReadContainer = new RandomAccessReadContainer(this.filePath, this.fileName);
-        RandomAccessFile randomAccessFile = randomAccessReadContainer.getRandomAccessFile();
-        try {
-            // moves file pointer to position (byte index) specified
-            randomAccessFile.seek(randomAccessFile.getFilePointer() + latestInsertedNodeKeyPosition);
-            byte[] bytes = new byte[1];
-            // read 1 byte (8 bits)
-            bytes[0] = randomAccessFile.readByte();
-            // create string from 1 byte (8 bits) [UTF-8]
-            singleCharacter = new String( bytes, "UTF-8" );
-            while(!isSpaceCharacterEncountered || singleCharacter.charAt(0) == ' ') {
-                newKeyStartIndex++;
-                if(singleCharacter.charAt(0) == ' ') isSpaceCharacterEncountered = true;
-                randomAccessFile.seek(randomAccessFile.getFilePointer());
-                bytes[0] = randomAccessFile.readByte();
-                singleCharacter = new String( bytes, "UTF-8" );
-            }
-        } catch (EOFException e) {
-            System.out.println("Encountered End Of File (Exception) before 2nd ' ' (space) character. Error: " + e.toString());
-        } catch (Exception e) {
-            randomAccessReadContainer.close();
-            throw e;
-        } finally {
-            randomAccessReadContainer.close();
-            return newKeyStartIndex;
+        while(true) {
+            if(singleCharacter == null) singleCharacter = readOneCharAtPositionToString(randomAccessReadContainer, latestInsertedNodeKeyPosition);
+            else singleCharacter = readNextCharToString(randomAccessReadContainer);
+            if(singleCharacter == null) throw new EOFException(
+                    "Encountered EOF Exception at position: " + newKeyStartIndex + ". " +
+                            "There are no more keys after this point."
+            );
+            if(singleCharacter.charAt(0) == this.getCharEOF()) throw new Exception(
+                    "Encountered EOF character ('" + this.getCharEOF() + "') at position: " + newKeyStartIndex + ". " +
+                    "There are no more keys after this point."
+            );
+            if(singleCharacter.charAt(0) == this.getCharEOK()) isEOKEncountered = true;
+            if(isEOKEncountered && !isSingleCharacterEOKorEOF(singleCharacter)) break;
+            newKeyStartIndex = newKeyStartIndex + singleCharacter.getBytes(Charset.forName("UTF-8")).length;
         }
+        randomAccessReadContainer.close();
+        return newKeyStartIndex;
     }
 
-    public String getNumberOfCharsFromFileAtPosition(int requestedAmountOfChars, int position) {
-        final String functionName = "String getNumberOfCharsFromFileAtPosition(int requestedAmountOfChars, int position)";
-        StringBuilder wholeKeyString = new StringBuilder();
-        int amountOfCharsRead = 0;
-        String singleCharacter = null;
-        RandomAccessReadContainer randomAccessReadContainer = new RandomAccessReadContainer(this.filePath, this.fileName);
-        RandomAccessFile randomAccessFile = randomAccessReadContainer.getRandomAccessFile();
-        try {
-            // moves file pointer to position (byte index) specified
-            randomAccessFile.seek(randomAccessFile.getFilePointer() + position);
-            byte[] bytes = new byte[1];
-            // read 1 byte (8 bits)
-            bytes[0] = randomAccessFile.readByte();
-            // create string from 1 byte (8 bits) [UTF-8]
-            singleCharacter = new String( bytes, "UTF-8" );
-            while(requestedAmountOfChars > amountOfCharsRead) {
-                wholeKeyString.append(singleCharacter);
-                amountOfCharsRead++;
-                randomAccessFile.seek(randomAccessFile.getFilePointer());
-                bytes[0] = randomAccessFile.readByte();
-                singleCharacter = new String( bytes, "UTF-8" );
-            }
-        } catch (EOFException e) {
-            System.out.println("Encountered End Of File (Exception) before 2nd ' ' (space) character.");
-        } catch (Exception e) {
-            randomAccessReadContainer.close();
-            throw e;
-        } finally {
-            randomAccessReadContainer.close();
-            return wholeKeyString.toString();
-        }
+    public boolean isSingleCharacterEOKorEOF(String singleCharacter) {
+        return singleCharacter.charAt(0) == this.charEOK || singleCharacter.charAt(0) == this.charEOF;
     }
 
     public boolean isCharExistFromFileAtPosition(int position) {
@@ -111,32 +83,27 @@ public abstract class FileOpsStrategy {
         final String functionName = "String getStringAtRandomPosition(int position)";
         String singleCharacter = null;
         RandomAccessReadContainer randomAccessReadContainer = new RandomAccessReadContainer(this.filePath, this.fileName);
-        RandomAccessFile randomAccessFile = randomAccessReadContainer.getRandomAccessFile();
+        singleCharacter = readOneCharAtPositionToString(randomAccessReadContainer, position);
+        randomAccessReadContainer.close();
+        return singleCharacter;
+    }
 
-        try {
-            // moves file pointer to position (byte index) specified
-            randomAccessFile.seek(randomAccessFile.getFilePointer() + position);
-            byte[] bytes = new byte[1];
-            // read 1 byte (8 bits)
-            bytes[0] = randomAccessFile.readByte();
-            // create string from 1 byte (8 bits) [UTF-8]
-            singleCharacter = new String( bytes, "UTF-8" );
-        } catch (IOException e) {
-            singleCharacter = null;
-            String exceptionMessage = ExceptionMessageGenerator.getMessage(PatriciaTree.class.getName(), functionName, e);
-            System.out.println(exceptionMessage);
-        }
-        finally {
-            randomAccessReadContainer.close();
-            return singleCharacter;
-        }
+    protected String readOneCharAtPositionToString(RandomAccessReadContainer randomAccessReadContainer, int position) {
+        randomAccessReadContainer.seek(position);
+        return randomAccessReadContainer.getNextCharToString();
+    }
+
+    protected String readNextCharToString(RandomAccessReadContainer randomAccessReadContainer) {
+        return randomAccessReadContainer.getNextCharToString();
     }
 
     @Override
     public String toString() {
-        return "FileOperations{\n" +
-                "\t\t\tfilePath='" + filePath + '\'' +
-                ",\n\t\t\tfileName='" + fileName + '\'' +
+        return "FileOpsStrategy{\n" +
+                "\t\t\tfilePath='" + filePath + "" +
+                ",\n\t\t\tfileName='" + fileName + "'" +
+                ",\n\t\t\tcharEOF='" + charEOF + "'" +
+                ",\n\t\t\tcharEOK='" + charEOK + "'" +
                 "\n\t\t}";
     }
 }

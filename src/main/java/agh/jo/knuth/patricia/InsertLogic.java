@@ -23,8 +23,8 @@ public class InsertLogic {
 
     public void insertNextKeyIntoTree(String binaryStringNextKeyToInsertFromFile, int filePositionNextKeyToInsert) throws Exception {
         if(latestInsertedNode == null) setLatestInsertedNode(getOwner().getHeader());
-        System.out.println("insertNextKeyIntoTree() >>> binaryStringNextKeyToInsertFromFile: " + binaryStringNextKeyToInsertFromFile);
-        System.out.println("insertNextKeyIntoTree() >>> filePositionNextKeyToInsert: " + filePositionNextKeyToInsert);
+        if( PatriciaTree.printProcessingInfo ) System.out.println("insertNextKeyIntoTree() >>> binaryStringNextKeyToInsertFromFile: " + binaryStringNextKeyToInsertFromFile);
+        if( PatriciaTree.printProcessingInfo ) System.out.println("insertNextKeyIntoTree() >>> filePositionNextKeyToInsert: " + filePositionNextKeyToInsert);
         LookUpLogic lookUpLogic = new LookUpLogic(getOwner());
         lookUpLogic.setLongestMatchingBitStreak( getMaxLengthOfMatchingBits( lookUpLogic, binaryStringNextKeyToInsertFromFile ) );
         lookUpLogic.setCurrentNode( getNodeWithMaxMatchingBits( lookUpLogic, binaryStringNextKeyToInsertFromFile ) );
@@ -36,9 +36,9 @@ public class InsertLogic {
     /** insertNextKeyIntoTree - Insert **/
 
     protected int getMaxLengthOfMatchingBits(LookUpLogic lookUpLogic, String binaryStringKeyToInsertFromFile) throws Exception {
-        if(lookUpLogic.isContaining(binaryStringKeyToInsertFromFile)) throw new Exception("The key you are trying to insert is matching existing key. No key should be a prefix of another key.");
+        if(lookUpLogic.isContainingPrefix(binaryStringKeyToInsertFromFile)) throw new Exception("The key you are trying to insert is matching existing key. No key should be a prefix of another key.");
         else {
-            System.out.println("getMaxLengthOfMatchingBits() >>> lookUp.getLongestMatchingBitStreak(): " + lookUpLogic.getLongestMatchingBitStreak());
+            if( PatriciaTree.printProcessingInfo ) System.out.println("getMaxLengthOfMatchingBits() >>> lookUp.getLongestMatchingBitStreak(): " + lookUpLogic.getLongestMatchingBitStreak());
             return lookUpLogic.getLongestMatchingBitStreak();
         }
     }
@@ -46,10 +46,10 @@ public class InsertLogic {
     protected PatriciaNode getNodeWithMaxMatchingBits(LookUpLogic lookUpLogic, String binaryStringKeyToInsertFromFile) throws Exception {
         int maxLengthOfMatchingBits = lookUpLogic.getLongestMatchingBitStreak();
         String matchingBitsKeyToInsertFromFile = this.owner.cutStringToLength(binaryStringKeyToInsertFromFile, maxLengthOfMatchingBits);
-        System.out.println("getNodeWithMaxMatchingBits() >>> matchingBitsKeyToInsertFromFile: " + matchingBitsKeyToInsertFromFile);
-        if(lookUpLogic.isContaining(matchingBitsKeyToInsertFromFile)) {
+        if( PatriciaTree.printProcessingInfo ) System.out.println("getNodeWithMaxMatchingBits() >>> matchingBitsKeyToInsertFromFile: " + matchingBitsKeyToInsertFromFile);
+        if(lookUpLogic.isContainingPrefix(matchingBitsKeyToInsertFromFile)) {
             PatriciaNode latestComperedNodeToKeyToInsert = lookUpLogic.getCurrentNode();
-            System.out.println("getNodeWithMaxMatchingBits() >>> this.lookUp.getCurrentNode(): " + lookUpLogic.getCurrentNode());
+            if( PatriciaTree.printProcessingInfo ) System.out.println("getNodeWithMaxMatchingBits() >>> this.lookUp.getCurrentNode(): " + lookUpLogic.getCurrentNode());
             return latestComperedNodeToKeyToInsert;
         } else throw new Exception("This should not happen. Execution of isContaining method should be successful " +
                 "because we have chosen bits of new key to insert that are matching some existing node inside the tree. " +
@@ -58,7 +58,7 @@ public class InsertLogic {
 
     protected PatriciaNode getNodeHavingAsChildNodeWithMaxMatchingBits(LookUpLogic lookUpLogic) {
         PatriciaNode secondToLatestComperedNodeToKeyToInsert = lookUpLogic.getPreviousNode();
-        System.out.println("getNodeHavingAsChildNodeWithMaxMatchingBits() >>> lookUp.getPreviousNode(): " + lookUpLogic.getPreviousNode());
+        if( PatriciaTree.printProcessingInfo ) System.out.println("getNodeHavingAsChildNodeWithMaxMatchingBits() >>> lookUp.getPreviousNode(): " + lookUpLogic.getPreviousNode());
         return secondToLatestComperedNodeToKeyToInsert;
     }
 

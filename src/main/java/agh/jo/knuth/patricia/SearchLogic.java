@@ -22,11 +22,11 @@ public class SearchLogic {
                 PatriciaNode[] onlyMatchingNode = new PatriciaNode[1];
                 onlyMatchingNode[0] = lookUpLogic.getCurrentNode();
                 return onlyMatchingNode;
-            } else return getMatchingNodes(lookUpLogic.getCurrentNode());
+            } else return getNodesMatchingPrefix(lookUpLogic.getCurrentNode());
         } else return null;
     }
 
-    protected PatriciaNode[] getMatchingNodes(PatriciaNode currentNode) throws Exception {
+    protected PatriciaNode[] getNodesMatchingPrefix(PatriciaNode currentNode) throws Exception {
         Map<String, Map<Integer, PatriciaNode>> subtreeNodesAndTheirAncestors = getSubtreeNodesAndTheirAncestors(currentNode, null);
         PatriciaNode[] subTreeNodes = mapToArray(subtreeNodesAndTheirAncestors.get("subTreeNodes"));
         PatriciaNode[] subTreeAncestors = mapToArray(subtreeNodesAndTheirAncestors.get("subTreeAncestors"));

@@ -20,20 +20,37 @@ public class App {
     public static void main( String[] args ) {
         PatriciaTree patriciaTree = getNewInitiatedTree(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
         checkPrefix(patriciaTree, "THIS");
+        checkPrefix(patriciaTree, "TH");
+
+        System.out.println();
         insertNextKeyIntoTree(patriciaTree);
         checkPrefix(patriciaTree, "IS");
+
+        System.out.println();
         insertNextKeyIntoTree(patriciaTree);
         checkPrefix(patriciaTree, "THE");
+        checkPrefix(patriciaTree, "TH");
+
+        System.out.println();
         insertNextKeyIntoTree(patriciaTree);
         checkPrefix(patriciaTree, "HOUSE");
+
+        System.out.println();
         insertNextKeyIntoTree(patriciaTree);
         checkPrefix(patriciaTree, "THAT");
+        checkPrefix(patriciaTree, "TH");
+
+        System.out.println();
         insertNextKeyIntoTree(patriciaTree);
         checkPrefix(patriciaTree, "JACK");
+
+        System.out.println();
         insertNextKeyIntoTree(patriciaTree);
         checkPrefix(patriciaTree, "BUILT");
-        insertNextKeyIntoTree(patriciaTree);
+        checkPrefix(patriciaTree, "TH");
 
+        System.out.println();
+        insertNextKeyIntoTree(patriciaTree);
     }
 
     public static PatriciaTree getNewInitiatedTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding) {
@@ -60,10 +77,12 @@ public class App {
         try {
             if(patriciaTree.isContainingPrefix(searchWord)) {
                 System.out.println("\"" + searchWord + "\" is a prefix contained inside PatriciaTree");
-                PatriciaNode[] nodesContainingPrefix = patriciaTree.findNodesMatchingPrefix("THIS");
+                PatriciaNode[] nodesContainingPrefix = patriciaTree.findNodesMatchingPrefix(searchWord);
                 for (PatriciaNode node:nodesContainingPrefix) {
                     System.out.println("\"" + searchWord + "\" is a prefix contained inside PatriciaNode with id: " + node.getId());
                 }
+            } else {
+                System.out.println("\"" + searchWord + "\" is NOT a prefix contained inside PatriciaTree");
             }
         } catch (Exception e) {
             System.out.println("Search word \"" + searchWord + "\" caused some kind of exception.");

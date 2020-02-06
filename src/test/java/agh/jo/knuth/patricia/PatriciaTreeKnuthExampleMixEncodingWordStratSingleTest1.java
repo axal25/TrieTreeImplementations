@@ -223,7 +223,7 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSingleTest1 extends Pat
     void PatriciaTree7thNodeFindNextWordStartIndex() throws Exception {
         PatriciaTree patriciaTree = getPatriciaTreeWithXNodesAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, fileStringArray, 7);
         FunctionalInterfaceVoidReturn fi = () -> {
-            int node7thKeyPosition = patriciaTree.getInsertLogic().getLatestInsertedNode().getKey();
+            int node7thKeyPosition = patriciaTree.getKeyInsertLogic().getLatestInsertedNode().getKey();
             patriciaTree.getFileOps().getFileOpsStrategy().findNextWordStartIndex(node7thKeyPosition);
         };
         assertThrows(Exception.class, fi::run);

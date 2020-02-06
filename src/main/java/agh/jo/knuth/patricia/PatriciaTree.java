@@ -9,9 +9,10 @@ import lombok.Getter;
 public class PatriciaTree {
     private FileOps fileOps;
     private MixMachine mixMachine;
-    private LookUpLogic lookUpLogic;
-    private InsertLogic insertLogic;
-    private SearchLogic searchLogic;
+    private PrefixLookUpLogic prefixLookUpLogic;
+    private KeyInsertLogic keyInsertLogic;
+    private PrefixSearchLogic prefixSearchLogic;
+    private KeyLookUpLogic keyLookUpLogic;
     private PatriciaNode header;
     private int nextNodeIdToInsert;
 
@@ -29,36 +30,40 @@ public class PatriciaTree {
         setMixMachine(encoding, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
-        initLookUpLogic();
-        initInsertLogic();
-        initSearchLogic();
+        initPrefixLookUpLogic();
+        initKeyInsertLogic();
+        initPrefixSearchLogic();
+        initKeyLookUpLogic();
     }
     public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, Encoding encoding, int amountOfBits) throws Exception {
         setFileOps(filePath, fileName, charEOF, charEOK);
         setMixMachine(encoding, amountOfBits, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
-        initLookUpLogic();
-        initInsertLogic();
-        initSearchLogic();
+        initPrefixLookUpLogic();
+        initKeyInsertLogic();
+        initPrefixSearchLogic();
+        initKeyLookUpLogic();
     }
     public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding) throws Exception {
         setFileOps(filePath, fileName, charEOF, charEOK, wordStrategy);
         setMixMachine(encoding, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
-        initLookUpLogic();
-        initInsertLogic();
-        initSearchLogic();
+        initPrefixLookUpLogic();
+        initKeyInsertLogic();
+        initPrefixSearchLogic();
+        initKeyLookUpLogic();
     }
     public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding, int amountOfBits) throws Exception {
         setFileOps(filePath, fileName, charEOF, charEOK, wordStrategy);
         setMixMachine(encoding, amountOfBits, charEOF, charEOK);
         setNextNodeIdToInsert(0);
         setHeader();
-        initLookUpLogic();
-        initInsertLogic();
-        initSearchLogic();
+        initPrefixLookUpLogic();
+        initKeyInsertLogic();
+        initPrefixSearchLogic();
+        initKeyLookUpLogic();
     }
 
     /** Setters **/
@@ -88,18 +93,21 @@ public class PatriciaTree {
         this.header = header;
     }
 
-    private void setLookUpLogic(LookUpLogic lookUpLogic) { this.lookUpLogic = lookUpLogic; }
-    private void initLookUpLogic() {
-        this.lookUpLogic = new LookUpLogic(this);
+    private void setPrefixLookUpLogic(PrefixLookUpLogic prefixLookUpLogic) { this.prefixLookUpLogic = prefixLookUpLogic; }
+    private void initPrefixLookUpLogic() {
+        this.prefixLookUpLogic = new PrefixLookUpLogic(this);
     }
 
-    private void setInsertLogic(InsertLogic insertLogic) { this.insertLogic = insertLogic; }
-    private void initInsertLogic() {
-        this.insertLogic = new InsertLogic(this);
+    private void setKeyInsertLogic(KeyInsertLogic keyInsertLogic) { this.keyInsertLogic = keyInsertLogic; }
+    private void initKeyInsertLogic() {
+        this.keyInsertLogic = new KeyInsertLogic(this);
     }
 
-    private void setSearchLogic(SearchLogic searchLogic) { this.searchLogic = searchLogic; }
-    private void initSearchLogic() { this.searchLogic = new SearchLogic(this); }
+    private void setPrefixSearchLogic(PrefixSearchLogic prefixSearchLogic) { this.prefixSearchLogic = prefixSearchLogic; }
+    private void initPrefixSearchLogic() { this.prefixSearchLogic = new PrefixSearchLogic(this); }
+
+    private void setKeyLookUpLogic(KeyLookUpLogic keyLookUpLogic) { this.keyLookUpLogic = keyLookUpLogic; }
+    private void initKeyLookUpLogic() { this.keyLookUpLogic = new KeyLookUpLogic(this); }
 
     private void setNextNodeIdToInsert(int nextNodeIdToInsert) {
         this.nextNodeIdToInsert = nextNodeIdToInsert;
@@ -111,25 +119,31 @@ public class PatriciaTree {
     /** Normal methods **/
     /** Public methods **/
 
-    // Algorithm P | Look-up
+    // Algorithm P | Look-up Prefix
     public boolean isContainingPrefix(String searchWord) throws Exception {
         String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
-        return this.lookUpLogic.isContainingPrefix(binarySearchWordString);
+        return this.prefixLookUpLogic.isContainingPrefix(binarySearchWordString);
     }
 
-    // Algorithm P + | Insert
+    // Algorithm P + | Insert Prefix
     public void insertNextKeyIntoTree() throws Exception {
-        int newKeyStartIndex = this.fileOps.getFileOpsStrategy().findNextWordStartIndex(this.insertLogic.getLatestInsertedNode().getKey());
+        int newKeyStartIndex = this.fileOps.getFileOpsStrategy().findNextWordStartIndex(this.keyInsertLogic.getLatestInsertedNode().getKey());
         String wordNextToInsertFromFile = this.fileOps.getFileOpsStrategy().getWordStringFromFileStartingAtPosition(newKeyStartIndex);
         String binaryStringNextToInsertFromFile = this.mixMachine.getBinaryString(wordNextToInsertFromFile);
-        this.insertLogic.insertNextKeyIntoTree(binaryStringNextToInsertFromFile, newKeyStartIndex);
+        this.keyInsertLogic.insertNextKeyIntoTree(binaryStringNextToInsertFromFile, newKeyStartIndex);
     }
 
-    // Algorithm P + | Search
+    // Algorithm P + | Search Prefix
     public PatriciaNode[] findNodesMatchingPrefix(String searchWord) throws Exception {
         String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
-        PatriciaNode[] nodesMatchingPrefix = this.searchLogic.findNodesMatchingPrefix(binarySearchWordString);
+        PatriciaNode[] nodesMatchingPrefix = this.prefixSearchLogic.findNodesMatchingPrefix(binarySearchWordString);
         return nodesMatchingPrefix;
+    }
+
+    // Look-up Key
+    public boolean isContainingKey(String searchWord) throws Exception {
+        String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
+        return this.keyLookUpLogic.isContainingKey(binarySearchWordString);
     }
 
     /** Protected (internal) methods **/
@@ -154,9 +168,9 @@ public class PatriciaTree {
                 .append("PatriciaTree{\n")
                 .append("\tfileOps = ").append(fileOps)
                 .append(", \n\tmixMachine = ").append(mixMachine)
-                .append(", \n\tlookUpLogic = ").append(lookUpLogic)
-                .append(", \n\tinsertLogic = ").append(insertLogic)
-                .append(", \n\tsearchLogic = ").append(searchLogic)
+                .append(", \n\tprefixLookUpLogic = ").append(prefixLookUpLogic)
+                .append(", \n\tkeyInsertLogic = ").append(keyInsertLogic)
+                .append(", \n\tprefixSearchLogic = ").append(prefixSearchLogic)
                 .append(", \n\theader = ").append(header.toString(1))
                 .append(", \n\tnextNodeIdToInsert = ").append(nextNodeIdToInsert)
                 .append("\n}");

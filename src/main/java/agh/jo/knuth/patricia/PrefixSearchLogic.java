@@ -7,22 +7,22 @@ import java.util.*;
 
 @Getter
 @Setter
-public class SearchLogic {
+public class PrefixSearchLogic {
     PatriciaTree owner;
 
-    private SearchLogic() {}
-    public SearchLogic(PatriciaTree owner) {
+    private PrefixSearchLogic() {}
+    public PrefixSearchLogic(PatriciaTree owner) {
         setOwner(owner);
     }
 
     protected PatriciaNode[] findNodesMatchingPrefix(String binarySearchWordString) throws Exception {
-        LookUpLogic lookUpLogic = new LookUpLogic(getOwner());
-        if(lookUpLogic.isContainingPrefix(binarySearchWordString)) {
-            if(lookUpLogic.getCurrentSearchWordBitIndex() < binarySearchWordString.length()) {
+        PrefixLookUpLogic prefixLookUpLogic = new PrefixLookUpLogic(getOwner());
+        if(prefixLookUpLogic.isContainingPrefix(binarySearchWordString)) {
+            if(prefixLookUpLogic.getCurrentSearchWordBitIndex() < binarySearchWordString.length()) {
                 PatriciaNode[] onlyMatchingNode = new PatriciaNode[1];
-                onlyMatchingNode[0] = lookUpLogic.getCurrentNode();
+                onlyMatchingNode[0] = prefixLookUpLogic.getCurrentNode();
                 return onlyMatchingNode;
-            } else return getNodesMatchingPrefix(lookUpLogic.getCurrentNode());
+            } else return getNodesMatchingPrefix(prefixLookUpLogic.getCurrentNode());
         } else return null;
     }
 
@@ -111,7 +111,7 @@ public class SearchLogic {
 
     @Override
     public String toString() {
-        return "SearchLogic{" +
+        return "PrefixSearchLogic{" +
                 "\n\t\towner=" + (owner==null?"PatriciaTree{ null }":"PatriciaTree{ !null }") +
                 "\n\t}";
     }

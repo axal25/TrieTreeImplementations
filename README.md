@@ -26,3 +26,7 @@ Patrcia tree implementation in accordance with directions from Knuth's book "The
         1. Class: 80%
         1. Method: 75%
         1. Line: 75%
+1. Graphical representation via JavaFX library and com.sirolf2009:fxgraph library (heavily modified to suit my needs).
+    1. To launch type in console \
+    `mvn clean javafx:run -e` \
+    (it is required to be in .../TrieTreeImplementations folder)

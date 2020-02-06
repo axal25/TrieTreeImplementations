@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
-public class LookUpLogic {
+public class PrefixLookUpLogic {
     private PatriciaTree owner;
     private PatriciaNode currentNode, previousNode;
     private int currentSearchWordBitIndex, longestMatchingBitStreak;
@@ -12,8 +12,8 @@ public class LookUpLogic {
 
     /** Setters **/
 
-    private LookUpLogic() {}
-    protected LookUpLogic(PatriciaTree owner) {
+    private PrefixLookUpLogic() {}
+    protected PrefixLookUpLogic(PatriciaTree owner) {
         this.owner = owner;
         setPreviousNode(getOwner().getHeader());
         setCurrentNode(getOwner().getHeader());
@@ -25,7 +25,7 @@ public class LookUpLogic {
     /** Normal methods **/
     /** Public methods **/
 
-    /** Algorithm P - isContaining - Look-up **/
+    /** Algorithm P - isContainingPrefix - Look-up Prefix **/
 
     protected boolean isContainingPrefix(String binarySearchWordString) throws Exception {
         setBinarySearchWordString( binarySearchWordString );
@@ -33,12 +33,12 @@ public class LookUpLogic {
         setCurrentNode(getOwner().getHeader());
         setCurrentSearchWordBitIndex(0);
         setLongestMatchingBitStreak(0);
-        if( PatriciaTree.printProcessingInfo ) System.out.println("isContainingPrefix() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString() + " >>> moveLeft()");
+        if( PatriciaTree.printProcessingInfo ) System.out.println("isContainingPrefix() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString() + " >>> moveLeft()");
         return moveLeft();
     }
 
     /** Protected (internal) methods **/
-    /** isContaining - Look-up **/
+    /** isContainingPrefix - Look-up Prefix **/
 
     // Ruch w lewo
     protected boolean moveLeft() throws Exception {
@@ -46,10 +46,10 @@ public class LookUpLogic {
         setCurrentNode(getPreviousNode().getLeftLink());
         if( PatriciaTree.printProcessingInfo ) System.out.print("moveLeft() >>> getPreviousNode(): " + getPreviousNode());
         if(getPreviousNode().getIsLeftAncestor()) {
-            if( PatriciaTree.printProcessingInfo ) System.out.println(" moveLeft() >>> getPreviousNode().getIsLeftAncestor() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            if( PatriciaTree.printProcessingInfo ) System.out.println(" moveLeft() >>> getPreviousNode().getIsLeftAncestor() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return compareKeyToSearchWord();
         } else {
-            if( PatriciaTree.printProcessingInfo ) System.out.println(" moveLeft() >>> !getPreviousNode().getIsLeftAncestor() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            if( PatriciaTree.printProcessingInfo ) System.out.println(" moveLeft() >>> !getPreviousNode().getIsLeftAncestor() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return skipBits();
         }
     }
@@ -59,10 +59,10 @@ public class LookUpLogic {
         if( PatriciaTree.printProcessingInfo ) System.out.println("skipBits() >>> getCurrentSearchWordBitIndex(): " + getCurrentSearchWordBitIndex() + " := " + (getCurrentSearchWordBitIndex() + getCurrentNode().getSkip()));
         setCurrentSearchWordBitIndex(getCurrentSearchWordBitIndex() + getCurrentNode().getSkip());
         if(getCurrentSearchWordBitIndex() >= getBinarySearchWordString().length()) {
-            if( PatriciaTree.printProcessingInfo ) System.out.println("skipBits() >>> getCurrentSearchWordBitIndex() >= getBinarySearchWordString().length() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            if( PatriciaTree.printProcessingInfo ) System.out.println("skipBits() >>> getCurrentSearchWordBitIndex() >= getBinarySearchWordString().length() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return compareKeyToSearchWord();
         } else {
-            if( PatriciaTree.printProcessingInfo ) System.out.println("skipBits() >>> getCurrentSearchWordBitIndex() < getBinarySearchWordString().length() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            if( PatriciaTree.printProcessingInfo ) System.out.println("skipBits() >>> getCurrentSearchWordBitIndex() < getBinarySearchWordString().length() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return bitCheck();
         }
     }
@@ -74,12 +74,12 @@ public class LookUpLogic {
                 ", getBinarySearchWordString().charAt(getCurrentSearchWordBitIndex()): " + getBinarySearchWordString().charAt(getCurrentSearchWordBitIndex()));
         if(getBinarySearchWordString().charAt(getCurrentSearchWordBitIndex()) == '1') {
             if( PatriciaTree.printProcessingInfo ) System.out.println("bitCheck() >>> getBinarySearchWordString().charAt(getCurrentSearchWordBitIndex()) == '1'" +
-                    " >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+                    " >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return moveRight();
         }
         else if(getBinarySearchWordString().charAt(getCurrentSearchWordBitIndex()) == '0') {
             if( PatriciaTree.printProcessingInfo ) System.out.println("bitCheck() >>> getBinarySearchWordString().charAt(getCurrentSearchWordBitIndex()) == '0'" +
-                    " >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+                    " >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return moveLeft();
         } else throw new Exception("Word you are trying to look-up has in its binary representation invalid character " +
                 "(neither 1 or 0) at position: " + getCurrentSearchWordBitIndex() +
@@ -92,11 +92,11 @@ public class LookUpLogic {
         setCurrentNode(getPreviousNode().getRightLink());
         if( PatriciaTree.printProcessingInfo ) System.out.print("moveRight() >>> getPreviousNode(): " + getPreviousNode());
         if(getPreviousNode().getIsRightAncestor()) {
-            if( PatriciaTree.printProcessingInfo ) System.out.println("moveRight() >>> getPreviousNode().getIsRightAncestor() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            if( PatriciaTree.printProcessingInfo ) System.out.println("moveRight() >>> getPreviousNode().getIsRightAncestor() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return compareKeyToSearchWord();
         }
         else {
-            if( PatriciaTree.printProcessingInfo ) System.out.println("moveRight() >>> !getPreviousNode().getIsRightAncestor() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            if( PatriciaTree.printProcessingInfo ) System.out.println("moveRight() >>> !getPreviousNode().getIsRightAncestor() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
             return skipBits();
         }
     }
@@ -108,7 +108,7 @@ public class LookUpLogic {
                 getCurrentNode().getKey()
         );
         if (PatriciaTree.printProcessingInfo)
-            System.out.println("compareKeyToSearchWord() >>> ((AlgorithmP) this).toString(): " + ((LookUpLogic) this).toString());
+            System.out.println("compareKeyToSearchWord() >>> ((AlgorithmP) this).toString(): " + ((PrefixLookUpLogic) this).toString());
         if (PatriciaTree.printProcessingInfo)
             System.out.println("compareKeyToSearchWord() >>> currentNodeNumberOfBitsFromFile: " + currentNodeNumberOfBitsFromFile);
         if (PatriciaTree.printProcessingInfo)
@@ -134,7 +134,7 @@ public class LookUpLogic {
 
     @Override
     public String toString() {
-        return "LookUpLogic{" +
+        return "PrefixLookUpLogic{" +
                 "\n\t\towner=" + (owner==null?"PatriciaTree{ null }":"PatriciaTree{ !null }") +
                 ",\n\t\tcurrentNode" + (currentNode==null?"=null":".getId()="+currentNode.getId()) +
                 ",\n\t\tpreviousNode" + (previousNode==null?"=null":".getId()="+previousNode.getId()) +

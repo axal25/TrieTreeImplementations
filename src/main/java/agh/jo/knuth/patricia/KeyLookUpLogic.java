@@ -6,7 +6,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class KeyLookUpLogic {
-    PatriciaTree owner;
+    private PatriciaTree owner;
+    private PatriciaNode currentNode = null;
 
     private KeyLookUpLogic() {}
     public KeyLookUpLogic(PatriciaTree owner) {
@@ -24,9 +25,18 @@ public class KeyLookUpLogic {
             PatriciaNode nodeMatchingPrefix = prefixLookUpLogic.getCurrentNode();
             String keyWordMatchingPrefix = getOwner().getFileOps().getFileOpsStrategy().getWordStringFromFileStartingAtPosition(nodeMatchingPrefix.getKey());
             String binaryRepresentationOfKeyWordMatchingPrefix = getOwner().getMixMachine().getBinaryString(keyWordMatchingPrefix);
-            if(binarySearchWordString.length() == binaryRepresentationOfKeyWordMatchingPrefix.length()) return true;
-            else return false;
-        } else return false;
+            if(binarySearchWordString.length() == binaryRepresentationOfKeyWordMatchingPrefix.length()) {
+                this.currentNode = nodeMatchingPrefix;
+                return true;
+            }
+            else {
+                this.currentNode = null;
+                return false;
+            }
+        } else {
+            this.currentNode = null;
+            return false;
+        }
     }
 
     /** Protected (internal) methods **/

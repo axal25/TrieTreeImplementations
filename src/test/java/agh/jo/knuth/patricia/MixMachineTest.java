@@ -46,17 +46,81 @@ public class MixMachineTest {
     @Order(4)
     @DisplayName("MixEncoding constructor 4")
     void MixMachine4() throws Exception {
-        MixMachine mixMachine1 = new MixMachine(Encoding.JAVA, 8);
-        MixMachine mixMachine2 = new MixMachine(Encoding.JAVA);
+        Encoding expectedEncoding = Encoding.JAVA;
+        int expectedAmountOfBits = 8;
+        MixMachine mixMachine1 = new MixMachine(expectedEncoding, expectedAmountOfBits);
+        MixMachine mixMachine2 = new MixMachine(expectedEncoding);
 
-        assertEquals(Encoding.JAVA, mixMachine1.getEncoding());
-        assertEquals(8, mixMachine1.getAmountOfBits());
+        assertEquals(expectedEncoding, mixMachine1.getEncoding());
+        assertEquals(expectedAmountOfBits, mixMachine1.getAmountOfBits());
         assertNull(mixMachine1.getMixEncoding());
+        String expectedBinaryString = getBinaryString("a".getBytes(), expectedAmountOfBits);
+        assertEquals(expectedBinaryString, getBinaryString(mixMachine1.getCharBytes('a'), expectedAmountOfBits));
+        assertEquals(expectedBinaryString, mixMachine1.getBinaryString('a'));
 
-        assertEquals(Encoding.JAVA, mixMachine2.getEncoding());
-        assertEquals(8, mixMachine2.getAmountOfBits());
+        assertEquals(expectedEncoding, mixMachine2.getEncoding());
+        assertEquals(expectedAmountOfBits, mixMachine2.getAmountOfBits());
         assertNull(mixMachine2.getMixEncoding());
+        assertEquals(expectedBinaryString, getBinaryString(mixMachine2.getCharBytes('a'), expectedAmountOfBits));
+        assertEquals(expectedBinaryString, mixMachine2.getBinaryString('a'));
 
         assertEquals(mixMachine1.toString(), mixMachine2.toString());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("MixEncoding constructor 5")
+    void MixMachine5() throws Exception {
+        Encoding expectedEncoding = Encoding.MIX;
+        int expectedAmountOfBits1 = 6;
+        int expectedAmountOfBits2 = MixMachine.MIX_DEFAULT_AMOUNT_OF_BITS;
+        char expectedEOFchar = ';';
+        char expectedEOKchar = ' ';
+        MixMachine mixMachine1 = new MixMachine(expectedEncoding, expectedAmountOfBits1, expectedEOFchar, expectedEOKchar);
+        MixMachine mixMachine2 = new MixMachine(expectedEncoding, expectedEOFchar, expectedEOKchar);
+
+        assertEquals(expectedEOFchar, mixMachine1.getMixEncoding().getCharEOF());
+        assertEquals(expectedEOKchar, mixMachine1.getMixEncoding().getCharEOK());
+        assertEquals(expectedEncoding, mixMachine1.getEncoding());
+        assertEquals(expectedAmountOfBits1, mixMachine1.getAmountOfBits());
+        assertNotNull(mixMachine1.getMixEncoding());
+        int expectedMixCharCode = 1; // 'A'
+        String expectedBinaryString1 = getBinaryString(new StringBuilder().append((char) expectedMixCharCode).toString().getBytes(), expectedAmountOfBits1);
+        assertEquals(
+                expectedBinaryString1,
+                getBinaryString(mixMachine1.getCharBytes(expectedMixCharCode), expectedAmountOfBits1)
+        );
+        assertEquals(
+                expectedBinaryString1,
+                mixMachine1.getBinaryString(expectedMixCharCode)
+        );
+
+        assertEquals(expectedEOFchar, mixMachine2.getMixEncoding().getCharEOF());
+        assertEquals(expectedEOKchar, mixMachine2.getMixEncoding().getCharEOK());
+        assertEquals(expectedEncoding, mixMachine2.getEncoding());
+        assertEquals(expectedAmountOfBits2, mixMachine2.getAmountOfBits());
+        assertNotNull(mixMachine2.getMixEncoding());
+        String expectedBinaryString2 = getBinaryString(new StringBuilder().append((char) expectedMixCharCode).toString().getBytes(), expectedAmountOfBits2);
+        assertEquals(
+                expectedBinaryString2,
+                getBinaryString(mixMachine2.getCharBytes(expectedMixCharCode), expectedAmountOfBits2)
+        );
+        assertEquals(
+                expectedBinaryString2,
+                mixMachine2.getBinaryString(expectedMixCharCode)
+        );
+
+        assertNotEquals(mixMachine1.toString(), mixMachine2.toString());
+    }
+
+    public static String getBinaryString(byte[] bytes, int amountOfBits) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (byte singleByte:bytes) {
+            String binaryString = Integer.toBinaryString((int) singleByte);
+            int binaryInt = Integer.parseInt(binaryString);
+            binaryString = String.format("%0" + amountOfBits + "d", binaryInt);
+            stringBuilder.append(binaryString);
+        }
+        return stringBuilder.toString();
     }
 }

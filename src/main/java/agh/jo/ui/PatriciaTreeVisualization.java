@@ -1,6 +1,6 @@
 package agh.jo.ui;
 
-import agh.jo.App;
+import agh.jo.Examples;
 import agh.jo.knuth.patricia.PatriciaNode;
 import agh.jo.knuth.patricia.PatriciaTree;
 import javafx.application.Application;
@@ -22,14 +22,13 @@ public class PatriciaTreeVisualization extends Application {
     public static String pathToStyleFile = "/application/application.css";
     private List<Cell> allCells;
     private List<Edge> allEdges;
-    public static PatriciaTree[] patriciaTrees = {
-            App.getExamplePatriciaTree1(),
-            App.getExamplePatriciaTree2(),
-            App.getExamplePatriciaTree3()
-    };
+    private List<PatriciaNode> nodesToProcessForEdges;
+    public static int[] patriciaTreesExampleIndexes = {0, 1, 2, 3, 4, 5, 6};
+    public static int DOT_PRINT_ITERATION_SPACING = 100;
 
     // to run via console:
-    // mvn clean javafx:run
+    // export MAVEN_OPTS="-Xms1024M -Xmx2048M -Xss4M -XX:MaxMetaspaceSize=4096M"
+    // mvn clean javafx:run -e -X
 
     public static void main(String[] args) {
         launch();
@@ -47,8 +46,10 @@ public class PatriciaTreeVisualization extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        PatriciaTree patriciaTree = patriciaTrees[2];
+        PatriciaTree patriciaTree = Examples.getExamplePatriciaTree(patriciaTreesExampleIndexes[6]);
+        System.out.println(">>> creating patricia tree visualization <<<");
         addComponentsToGraph(graph, patriciaTree);
+        System.out.println(">>> created patricia tree visualization <<<");
 
         PatriciaTreeLayout patriciaTreeLayout = new PatriciaTreeLayout(graph);
         patriciaTreeLayout.execute(patriciaTree);
@@ -72,10 +73,16 @@ public class PatriciaTreeVisualization extends Application {
         Model model = graph.getModel();
         graph.beginUpdate();
         allCells = getSubTreeCells(patriciaTree.getHeader());
-        allEdges = initAllEdges(patriciaTree.getHeader(), (LinkedList<Cell>) allCells);
+        System.out.println(">>> created patricia tree's nodes <<<");
+        allEdges = initAllEdges(patriciaTree);
+        System.out.println(">>> created patricia tree's branches <<<");
+        int counter = 0;
         for (Cell cell:allCells) {
             model.addCell(cell);
+            counter++;
+            if(counter % DOT_PRINT_ITERATION_SPACING == 0) System.out.print(".");
         }
+        System.out.println("\n>>> added patricia tree's nodes <<<");
         for (Edge edge:allEdges) {
             if(edge instanceof EdgeLoop) {
                 EdgeLoop edgeLoop = (EdgeLoop) edge;
@@ -91,7 +98,10 @@ public class PatriciaTreeVisualization extends Application {
                 for (Edge subEdge:edgeAncestor.subEdges) { model.addEdge(subEdge); }
             }
             model.addEdge(edge);
+            counter++;
+            if(counter % DOT_PRINT_ITERATION_SPACING == 0) System.out.print(".");
         }
+        System.out.println("\n>>> added patricia tree's branches <<<");
         graph.endUpdate();
     }
 
@@ -107,15 +117,23 @@ public class PatriciaTreeVisualization extends Application {
         return cells;
     }
 
-    private LinkedList<Edge> initAllEdges(PatriciaNode currentSubTreeRoot, LinkedList<Cell> allCells) {
+    private LinkedList<Edge> initAllEdges(PatriciaTree patriciaTree) {
         this.allEdges = new LinkedList<>();
-        int level = 0;
-        this.allEdges = getSubTreeEdges(currentSubTreeRoot, allCells);
+        this.nodesToProcessForEdges = new LinkedList<>();
+        this.nodesToProcessForEdges.add(patriciaTree.getHeader());
+        int counter = 1;
+        while (this.nodesToProcessForEdges.size()>0) {
+            initSubTreeEdges();
+            counter++;
+            if(counter % DOT_PRINT_ITERATION_SPACING == 0) System.out.print(".");
+        }
         return (LinkedList<Edge>) this.allEdges;
     }
 
-    private LinkedList<Edge> getSubTreeEdges(PatriciaNode currentSubTreeRoot, LinkedList<Cell> allCells) {
-        Cell[] leftTargetAndCurrentSourceAndRightTargetCells = findLeftTargetAndCurrentSourceAndRightTargetCell(currentSubTreeRoot, allCells);
+    private void initSubTreeEdges() {
+        PatriciaNode currentSubTreeRoot = this.nodesToProcessForEdges.get(0);
+
+        Cell[] leftTargetAndCurrentSourceAndRightTargetCells = findLeftTargetAndCurrentSourceAndRightTargetCell(currentSubTreeRoot);
         Cell leftTargetCell = leftTargetAndCurrentSourceAndRightTargetCells[0];
         Cell currentSourceCell = leftTargetAndCurrentSourceAndRightTargetCells[1];
         Cell rightTargetCell = leftTargetAndCurrentSourceAndRightTargetCells[2];
@@ -123,11 +141,12 @@ public class PatriciaTreeVisualization extends Application {
 
         if(leftTargetCell!=null) edges.add( processOneSideEdge(currentSourceCell, leftTargetCell, true, currentSubTreeRoot) );
         if(rightTargetCell!=null) edges.add( processOneSideEdge(currentSourceCell, rightTargetCell, false, currentSubTreeRoot) );
+        this.allEdges.addAll(edges);
 
-        if(currentSubTreeRoot.getLeftLink()!=null && !currentSubTreeRoot.getIsLeftAncestor()) edges.addAll( getSubTreeEdges(currentSubTreeRoot.getLeftLink(), allCells) );
-        if(currentSubTreeRoot.getRightLink()!=null && !currentSubTreeRoot.getIsRightAncestor()) edges.addAll( getSubTreeEdges(currentSubTreeRoot.getRightLink(), allCells) );
+        if(currentSubTreeRoot.getLeftLink()!=null && !currentSubTreeRoot.getIsLeftAncestor()) this.nodesToProcessForEdges.add(currentSubTreeRoot.getLeftLink());
+        if(currentSubTreeRoot.getRightLink()!=null && !currentSubTreeRoot.getIsRightAncestor()) this.nodesToProcessForEdges.add(currentSubTreeRoot.getRightLink());
 
-        return edges;
+        this.nodesToProcessForEdges.remove(currentSubTreeRoot);
     }
 
     private Edge processOneSideEdge(Cell currentSourceCell, Cell sideTargetCell, boolean isLeftSide, PatriciaNode currentSubTreeRoot) {
@@ -160,7 +179,7 @@ public class PatriciaTreeVisualization extends Application {
         return new EdgeChild(currentSourceCell, sideTargetCell, EdgeType.CHILD, isLeftEdge?EdgeSide.LEFT:EdgeSide.RIGHT);
     }
 
-    private Cell[] findLeftTargetAndCurrentSourceAndRightTargetCell(PatriciaNode currentSubTreeRoot, LinkedList<Cell> allCells) {
+    private Cell[] findLeftTargetAndCurrentSourceAndRightTargetCell(PatriciaNode currentSubTreeRoot) {
         int currentSourceId = currentSubTreeRoot.getId();
         int leftTargetId = -1;
         int rightTargetId = -1;

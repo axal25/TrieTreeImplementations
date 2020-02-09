@@ -1,5 +1,6 @@
 package agh.jo.knuth.patricia.file.ops;
 
+import agh.jo.knuth.patricia.file.ops.exceptions.NextWordStartIndexNotFound;
 import agh.jo.utils.file.RandomAccessReadContainer;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +36,7 @@ public abstract class FileOpsStrategy {
 
     public abstract String getNumberOfCharsBasedOnNumberOfBitsFromFileAtPosition(int requestedAmountOfBits, int position) throws Exception;
 
-    public int findNextWordStartIndex(int latestInsertedNodeKeyPosition) throws Exception {
+    public int findNextWordStartIndex(int latestInsertedNodeKeyPosition) throws NextWordStartIndexNotFound {
         final String functionName = "String findNewKeyStartIndex(int latestInsertedNodeKeyPosition)";
         boolean isEOKEncountered = false;
         String singleCharacter = null;
@@ -44,11 +45,15 @@ public abstract class FileOpsStrategy {
         while(true) {
             if(singleCharacter == null) singleCharacter = readOneCharAtPositionToString(randomAccessReadContainer, latestInsertedNodeKeyPosition);
             else singleCharacter = readNextCharToString(randomAccessReadContainer);
-            if(singleCharacter == null) throw new EOFException(
+            if(singleCharacter == null) throw new NextWordStartIndexNotFound(
+                    this.getClass().getName(),
+                    functionName,
                     "Encountered EOF Exception at position: " + newKeyStartIndex + ". " +
                             "There are no more keys after this point."
             );
-            if(singleCharacter.charAt(0) == this.getCharEOF()) throw new Exception(
+            if(singleCharacter.charAt(0) == this.getCharEOF()) throw new NextWordStartIndexNotFound(
+                    this.getClass().getName(),
+                    functionName,
                     "Encountered EOF character ('" + this.getCharEOF() + "') at position: " + newKeyStartIndex + ". " +
                     "There are no more keys after this point."
             );

@@ -3,7 +3,7 @@ package agh.jo.ui;
 import javafx.scene.paint.Color;
 
 public class EdgeLoop extends Edge {
-    public static final int X_POSITION_OFFSET = RectangleCell.width/4;
+    public static final int X_POSITION_OFFSET = PatriciaTreeLayout.X_POSITION_SPACING_AT_MAX_LEVEL/4;
     public static final int Y_POSITION_OFFSET = RectangleCell.height/4;
 
     public Cell source;
@@ -46,19 +46,20 @@ public class EdgeLoop extends Edge {
     public void position() {
         double x1, x2;
         double y1, y2;
-        double xSpacingOffset = ((double) PatriciaTreeLayout.X_POSITION_SPACING_AT_MAX_LEVEL/2.0);
+        double xSpacingOffset = ((double) PatriciaTreeLayout.X_POSITION_SPACING_AT_MAX_LEVEL/4.0);
+
         if(this.edgeSide == EdgeSide.LEFT) x1 = source.getLayoutX();
         else x1 = source.getLayoutX() + RectangleCell.width;
-        y1 = source.getLayoutY() + xSpacingOffset -1 * Y_POSITION_OFFSET;
+
+        y1 = source.getLayoutY() + 1 * Y_POSITION_OFFSET;
         subCells[0].relocate(x1, y1);
 
         if(this.edgeSide == EdgeSide.LEFT) x2 = source.getLayoutX() -1 * X_POSITION_OFFSET;
         else x2 = source.getLayoutX() + (2*xSpacingOffset) +1 * X_POSITION_OFFSET;
         subCells[1].relocate(x2, y1);
 
-        y2 = source.getLayoutY() + xSpacingOffset +1 * Y_POSITION_OFFSET;
+        y2 = source.getLayoutY() + 3 * Y_POSITION_OFFSET;
         subCells[2].relocate(x2, y2);
-
         subCells[3].relocate(x1, y2);
     }
 

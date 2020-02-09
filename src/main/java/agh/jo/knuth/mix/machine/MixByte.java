@@ -9,15 +9,12 @@ public class MixByte {
     private int amountOfBits;
     private byte bytes[];
     static final public int MAX_UTF8_CHAR_BIT_LENGTH = 32;
+    static final public int JAVA_BITS_AMOUNT_PER_BYTE = 8;
     // FileOperations reads byte one by one (8 bits at a time), then creates String(bytes, "UTF-8"); which is enough for most characters in ASCII
 
     public MixByte(int amountOfBits, int intValue) throws Exception {
         setAmountOfBits(amountOfBits);
         setBytes(intValue);
-    }
-
-    public static MixByte intToMixByte(int amountOfBits, Integer intValue) throws Exception {
-        return new MixByte(amountOfBits, intValue);
     }
 
     private void setAmountOfBits(int amountOfBits) {
@@ -35,8 +32,8 @@ public class MixByte {
         return flushedRightMixBytesInStringToByteArray(flushedRightMixBytesInStrings);
     }
 
-    protected int calculateAmountOfBytes() {
-        return (int) Math.ceil((float) this.amountOfBits/8);
+    protected int calculateAmountOfJavaBytes() {
+        return (int) Math.ceil((float) this.amountOfBits/JAVA_BITS_AMOUNT_PER_BYTE);
     }
 
     protected String intToJavaBitsInString(int intValue) {
@@ -57,7 +54,7 @@ public class MixByte {
     }
 
     protected String[] flushRightMixBitsInString(String mixBitsInString) {
-        String[] flushedRightMixBitsInStrings = new String[ calculateAmountOfBytes() ];
+        String[] flushedRightMixBitsInStrings = new String[ calculateAmountOfJavaBytes() ];
         int substringStart = 0;
         int substringEnd = 7;
         for (int i = 0; i < flushedRightMixBitsInStrings.length; i++) {
@@ -102,11 +99,8 @@ public class MixByte {
     }
 
     public String getBytesToMixBinaryString() {
-        StringBuilder mixBinaryString = new StringBuilder();
-//        for (int i = 0; i < this.bytes.length; i++) mixBinaryString.append(String.format("%0" + this.amountOfBits + "d", Integer.parseInt(Integer.toBinaryString(this.bytes[i]))));
         String binaryString = getBytesToBinaryString();
-        for (int i = binaryString.length()-this.amountOfBits; i<binaryString.length(); i++) mixBinaryString.append(binaryString.charAt(i));
-        return mixBinaryString.toString();
+        return binaryString.substring(binaryString.length() - this.amountOfBits);
     }
 
     @Override

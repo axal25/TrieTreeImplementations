@@ -34,9 +34,11 @@ public class EdgeChild extends Edge {
     public void position() {
         double x;
         double y;
-        double xSpacingOffset = ((double) PatriciaTreeLayout.X_POSITION_SPACING_AT_MAX_LEVEL/2.0);
+        double xSpacingOffset = ((double) PatriciaTreeLayout.X_POSITION_SPACING_AT_MAX_LEVEL/4.0);
+
         if(this.edgeSide == EdgeSide.LEFT) x = target.getLayoutX() + xSpacingOffset;
         else x = target.getLayoutX() + xSpacingOffset;
+
         y = source.getLayoutY() + ((double) RectangleCell.height)/2;
         subCells[0].relocate(x, y);
         System.out.println();

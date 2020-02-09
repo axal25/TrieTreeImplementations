@@ -108,7 +108,7 @@ public class MixEncoding {
         int valueToReplaceKeyChar = this.charCodes.get(toReplaceKeyChar);
         this.charCodes.remove(toReplaceKeyChar);
         boolean previouslyContainedToInsertKeyChar = this.charCodes.containsKey(toInsertKeyChar);
-        int valueToInsertKeyChar = this.charCodes.get(toInsertKeyChar);
+        int valueToInsertKeyChar = this.charCodes.get(toInsertKeyChar)==null?-1:this.charCodes.get(toInsertKeyChar);
         this.charCodes.remove(toInsertKeyChar);
         this.charCodes.put(toInsertKeyChar, valueToReplaceKeyChar);
         if(previouslyContainedToInsertKeyChar) this.charCodes.put(toReplaceKeyChar, valueToInsertKeyChar);

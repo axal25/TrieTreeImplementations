@@ -1,6 +1,5 @@
 package agh.jo.knuth.patricia;
 
-import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
 import agh.jo.knuth.patricia.file.ops.FileOpsStrategy;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
 
@@ -191,9 +190,10 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             char charEOK,
             WordStrategy wordStrategy,
             Encoding encoding,
+            int amountOfBits,
             String[] fileStringArray
     ) throws Exception {
-        PatriciaTree patriciaTree = new PatriciaTree(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
+        PatriciaTree patriciaTree = new PatriciaTree(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, amountOfBits);
         assertNotNull(patriciaTree);
         assertNotNull(patriciaTree.getMixMachine());
         assertNotNull(patriciaTree.getFileOps().getFileOpsStrategy());
@@ -234,12 +234,13 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             char charEOK,
             WordStrategy wordStrategy,
             Encoding encoding,
+            int expectedAmountOfBits,
             String[] fileStringArray,
             int amountOfNodes
     ) throws Exception {
         if(amountOfNodes < 0) throw new Exception("Patricia tree can't have less nodes than 1. It always has at least one (header) node. amountOfNodes: " + amountOfNodes);
         if(amountOfNodes > fileStringArray.length) throw new Exception("This patricia tree can't have more nodes than there are words in file. fileStringArray.length: " + fileStringArray.length);
-        PatriciaTree patriciaTree = getNewInitiatedPatriciaTreeAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, fileStringArray);
+        PatriciaTree patriciaTree = getNewInitiatedPatriciaTreeAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, expectedAmountOfBits, fileStringArray);
         for (int i = 1; i < amountOfNodes; i++) {
             patriciaTree.insertNextKeyIntoTree();
             assertIsContainingPrefix(patriciaTree, fileStringArray, i+1);
@@ -283,12 +284,13 @@ public abstract class PatriciaTreeWordStratSPTEOFTest {
             char charEOK,
             WordStrategy wordStrategy,
             Encoding encoding,
+            int expectedAmountOfBits,
             String[] fileStringArray,
             int amountOfNodes,
             String[] headerRepresentations
     ) throws Exception {
         PatriciaTree patriciaTree =
-                getPatriciaTreeWithXNodesAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, fileStringArray, amountOfNodes);
+                getPatriciaTreeWithXNodesAndAssert(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, expectedAmountOfBits, fileStringArray, amountOfNodes);
         assertEquals(headerRepresentations[amountOfNodes-1], patriciaTree.getHeader().toString());
         return patriciaTree;
     }

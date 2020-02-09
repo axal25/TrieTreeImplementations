@@ -23,12 +23,13 @@ public class WordStartPositionToEOFStrategyMixTest1 extends WordStartPositionToE
     public final static char charEOF = ';';
     public final static char charEOK = ' ';
     public final static int[] charPositionIndexArray = getCharPosition(expectedCharStringArray);
+    public final static int amountOfBits = 5;
 
     @Test
     @Order(1)
     @DisplayName("getStringFromFileAtPositionRandomAccess")
     void getStringAtPositionRandomAccessMIX() throws Exception {
-        FileOpsStrategy fileOpsStrategy = getFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
+        FileOpsStrategy fileOpsStrategy = getNewFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, amountOfBits);
         assertGetStringFromFileAtPositionRandomAccess(fileOpsStrategy, expectedCharStringArray, charPositionIndexArray);
     }
 
@@ -36,7 +37,7 @@ public class WordStartPositionToEOFStrategyMixTest1 extends WordStartPositionToE
     @Order(2)
     @DisplayName("getCharFromFileAtPosition")
     void getCharAtPositionMIX() throws Exception {
-        FileOpsStrategy fileOpsStrategy = getFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
+        FileOpsStrategy fileOpsStrategy = getNewFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, amountOfBits);
         assertGetCharFromFileAtPosition(fileOpsStrategy, expectedCharStringArray, charPositionIndexArray);
     }
 
@@ -44,7 +45,7 @@ public class WordStartPositionToEOFStrategyMixTest1 extends WordStartPositionToE
     @Order(3)
     @DisplayName("isCharExistFromFileAtPosition")
     void isCharExistFromFileAtPositionMIX() throws Exception {
-        FileOpsStrategy fileOpsStrategy = getFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
+        FileOpsStrategy fileOpsStrategy = getNewFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, amountOfBits);
         assertIsCharExistFromFileAtPosition(fileOpsStrategy, charPositionIndexArray);
     }
 
@@ -52,8 +53,8 @@ public class WordStartPositionToEOFStrategyMixTest1 extends WordStartPositionToE
     @Order(4)
     @DisplayName("getNumberOfBitsFromFileAtPosition")
     void getNumberOfBitsFromFileAtPositionMIX() throws Exception {
-        FileOpsStrategy fileOpsStrategy = getFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
-        MixMachine mixMachine = getMixMachine(encoding, charEOF, charEOK);
+        FileOpsStrategy fileOpsStrategy = getNewFileOpsStrategy(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, amountOfBits);
+        MixMachine mixMachine = extractMixMachine(fileOpsStrategy);
         assertGetNumberOfBitsFromFileAtPosition(fileOpsStrategy, mixMachine, expectedCharStringArray);
     }
 }

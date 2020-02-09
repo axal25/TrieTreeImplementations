@@ -6,7 +6,7 @@ import agh.jo.knuth.patricia.PatriciaTree;
 import java.util.List;
 
 public class PatriciaTreeLayout extends Layout {
-    public static int X_POSITION_SPACING_AT_MAX_LEVEL = RectangleCell.width;
+    public static int X_POSITION_SPACING_AT_MAX_LEVEL = 2*RectangleCell.width;
     public int positionXOffset = -1;
     public static int POSITION_Y_OFFSET = 100;
     public static double POSITION_X_OFFSET_RATIO_MULTIPLIER = 0.5;

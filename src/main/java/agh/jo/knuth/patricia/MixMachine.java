@@ -3,14 +3,12 @@ package agh.jo.knuth.patricia;
 import agh.jo.knuth.mix.machine.MixByte;
 import agh.jo.knuth.mix.machine.MixEncoding;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.nio.charset.StandardCharsets;
 
 @Getter
 public class MixMachine {
     private Encoding encoding;
-    @Setter
     private int amountOfBits;
     private MixEncoding mixEncoding;
     public static final int MIX_DEFAULT_AMOUNT_OF_BITS = 5;
@@ -29,19 +27,19 @@ public class MixMachine {
     }
 
     public MixMachine(Encoding encoding, int amountOfBits, char charEOF, char charEOK) throws Exception {
-        setMixEncoding(charEOF, charEOK);
+        setMixEncoding(charEOF, charEOK, encoding);
         setEncoding(encoding);
         setAmountOfBits(amountOfBits);
     }
 
     public MixMachine(Encoding encoding, char charEOF, char charEOK) throws Exception {
-        setMixEncoding(charEOF, charEOK);
+        setMixEncoding(charEOF, charEOK, encoding);
         setEncoding(encoding);
         setAmountOfBits();
     }
 
-    private void setMixEncoding(char charEOF, char charEOK) {
-        this.mixEncoding = new MixEncoding(charEOF, charEOK);
+    private void setMixEncoding(char charEOF, char charEOK, Encoding encoding) {
+        if(encoding == Encoding.MIX) this.mixEncoding = new MixEncoding(charEOF, charEOK);
     }
 
     private void setEncoding(Encoding encoding) throws Exception {
@@ -51,6 +49,10 @@ public class MixMachine {
         else if(encoding != Encoding.JAVA && encoding != Encoding.MIX)
             throw new Exception("Bad encoding: " + encoding);
         else this.encoding = encoding;
+    }
+
+    private void setAmountOfBits(int amountOfBits) {
+        this.amountOfBits = amountOfBits;
     }
 
     private void setAmountOfBits() throws Exception {

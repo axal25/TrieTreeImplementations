@@ -2,6 +2,7 @@ package agh.jo.knuth.patricia;
 
 import agh.jo.knuth.patricia.file.ops.FileOps;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
+import agh.jo.knuth.patricia.file.ops.exceptions.NextWordStartIndexNotFound;
 import agh.jo.utils.exceptions.NotForUseException;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ public class PatriciaTree {
     private KeyInsertLogic keyInsertLogic;
     private PrefixSearchLogic prefixSearchLogic;
     private KeyLookUpLogic keyLookUpLogic;
+    private KeySearchLogic keySearchLogic;
     private PatriciaNode header;
     private int nextNodeIdToInsert;
 
@@ -34,6 +36,7 @@ public class PatriciaTree {
         initKeyInsertLogic();
         initPrefixSearchLogic();
         initKeyLookUpLogic();
+        initKeySearchLogic();
     }
     public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, Encoding encoding, int amountOfBits) throws Exception {
         setFileOps(filePath, fileName, charEOF, charEOK);
@@ -44,6 +47,7 @@ public class PatriciaTree {
         initKeyInsertLogic();
         initPrefixSearchLogic();
         initKeyLookUpLogic();
+        initKeySearchLogic();
     }
     public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding) throws Exception {
         setFileOps(filePath, fileName, charEOF, charEOK, wordStrategy);
@@ -54,6 +58,7 @@ public class PatriciaTree {
         initKeyInsertLogic();
         initPrefixSearchLogic();
         initKeyLookUpLogic();
+        initKeySearchLogic();
     }
     public PatriciaTree(String filePath, String fileName, char charEOF, char charEOK, WordStrategy wordStrategy, Encoding encoding, int amountOfBits) throws Exception {
         setFileOps(filePath, fileName, charEOF, charEOK, wordStrategy);
@@ -64,6 +69,7 @@ public class PatriciaTree {
         initKeyInsertLogic();
         initPrefixSearchLogic();
         initKeyLookUpLogic();
+        initKeySearchLogic();
     }
 
     /** Setters **/
@@ -109,6 +115,9 @@ public class PatriciaTree {
     private void setKeyLookUpLogic(KeyLookUpLogic keyLookUpLogic) { this.keyLookUpLogic = keyLookUpLogic; }
     private void initKeyLookUpLogic() { this.keyLookUpLogic = new KeyLookUpLogic(this); }
 
+    private void setKeySearchLogic(KeySearchLogic keySearchLogic) { this.keySearchLogic = keySearchLogic; }
+    private void initKeySearchLogic() { this.keySearchLogic = new KeySearchLogic(this); }
+
     private void setNextNodeIdToInsert(int nextNodeIdToInsert) {
         this.nextNodeIdToInsert = nextNodeIdToInsert;
     }
@@ -144,6 +153,19 @@ public class PatriciaTree {
     public boolean isContainingKey(String searchWord) throws Exception {
         String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
         return this.keyLookUpLogic.isContainingKey(binarySearchWordString);
+    }
+
+    // Search Key
+    public PatriciaNode findNodeMatchingKey(String searchWord) throws Exception {
+        String binarySearchWordString = this.mixMachine.getBinaryString(searchWord);
+        PatriciaNode nodeMatchingKey = this.keySearchLogic.findNodeMatchingKey(binarySearchWordString);
+        return nodeMatchingKey;
+    }
+
+    public void insertAllKeysIntoTree() throws Exception {
+        try {
+            while(true) insertNextKeyIntoTree();
+        } catch (NextWordStartIndexNotFound e) {}
     }
 
     /** Protected (internal) methods **/

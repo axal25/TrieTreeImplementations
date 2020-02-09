@@ -10,23 +10,24 @@ import java.nio.charset.Charset;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class FileOpsStrategyAbstractTest {
-    public static FileOpsStrategy getFileOpsStrategy(
+    public static FileOpsStrategy getNewFileOpsStrategy(
             String filePath,
             String fileName,
             char charEOF,
             char charEOK,
             WordStrategy wordStrategy,
-            Encoding encoding
+            Encoding encoding,
+            int amountOfBits
     ) throws Exception {
         FileOps fileOps = new FileOps(null, filePath, fileName, charEOF, charEOK, wordStrategy);
-        PatriciaTree patriciaTree = new PatriciaTree(filePath, fileName, charEOF, charEOK, wordStrategy, encoding);
+        PatriciaTree patriciaTree = new PatriciaTree(filePath, fileName, charEOF, charEOK, wordStrategy, encoding, amountOfBits);
         fileOps = patriciaTree.getFileOps();
         FileOpsStrategy fileOpsStrategy = fileOps.getFileOpsStrategy();
         return fileOpsStrategy;
     }
 
-    public static MixMachine getMixMachine(Encoding encoding, char charEOF, char charEOK) throws Exception {
-        return new MixMachine(encoding, charEOF, charEOK);
+    public static MixMachine extractMixMachine(FileOpsStrategy fileOpsStrategy) {
+        return fileOpsStrategy.getOwner().getOwner().getMixMachine();
     }
 
     public static int[] getCharPosition(String[] expectedCharStringArray) {
@@ -90,8 +91,8 @@ public abstract class FileOpsStrategyAbstractTest {
         assertEquals(expectedFileWholeContent, actualFileWholeContent);
     }
 
-    public int getBytePosition(String[] expectedCharStringArrayOrFileStringArray, int expectedArrayIndex) {
-        String skippedFileContent = concatStringArray(expectedCharStringArrayOrFileStringArray, 1, expectedArrayIndex-1);
+    public int getBytePosition(String[] expectedCharStringArray, int expectedArrayIndex) {
+        String skippedFileContent = concatStringArray(expectedCharStringArray, 1, expectedArrayIndex-1);
         byte[] bytes = skippedFileContent.getBytes(Charset.forName("UTF-8"));
         return bytes.length;
     }
@@ -105,8 +106,8 @@ public abstract class FileOpsStrategyAbstractTest {
     }
 
     public static int getByteAmount(String[] fileStringArray, int startStringArrayIndex, int endStringArrayIndex, MixMachine mixMachine) throws Exception {
-        if(mixMachine.getEncoding() == Encoding.JAVA) return getBitAmount(fileStringArray, startStringArrayIndex, endStringArrayIndex, mixMachine)/MixMachine.JAVA_DEFAULT_AMOUNT_OF_BITS;
-        if(mixMachine.getEncoding() == Encoding.MIX) return getBitAmount(fileStringArray, startStringArrayIndex, endStringArrayIndex, mixMachine)/MixMachine.MIX_DEFAULT_AMOUNT_OF_BITS;
+        if(mixMachine.getEncoding() == Encoding.JAVA) return getBitAmount(fileStringArray, startStringArrayIndex, endStringArrayIndex, mixMachine)/mixMachine.getAmountOfBits(); //MixMachine.JAVA_DEFAULT_AMOUNT_OF_BITS;
+        if(mixMachine.getEncoding() == Encoding.MIX) return getBitAmount(fileStringArray, startStringArrayIndex, endStringArrayIndex, mixMachine)/mixMachine.getAmountOfBits(); //MixMachine.MIX_DEFAULT_AMOUNT_OF_BITS;
         throw new Exception("Bad encoding. Mix machine's encoding is neither " + Encoding.JAVA + " nor " + Encoding.MIX + ". Your mix machine's encoding: " + mixMachine.getEncoding());
     }
 

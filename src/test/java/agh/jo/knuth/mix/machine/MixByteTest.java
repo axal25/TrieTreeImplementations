@@ -65,7 +65,7 @@ public class MixByteTest {
         assertNotNull(mixByte);
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfBytes());
+        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfJavaBytes());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class MixByteTest {
         assertNotNull(mixByte);
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfBytes());
+        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfJavaBytes());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class MixByteTest {
         assertNotNull(mixByte);
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfBytes());
+        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfJavaBytes());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class MixByteTest {
         assertNotNull(mixByte);
         assertEquals(amountOfBits, mixByte.getAmountOfBits());
 //            assertNotNull(mixByte.getBytes());
-        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfBytes());
+        assertEquals(expectedAmountOfBytes, mixByte.calculateAmountOfJavaBytes());
     }
 
     @Test

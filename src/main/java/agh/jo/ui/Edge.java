@@ -10,6 +10,8 @@ public class Edge extends Group {
     public Line line;
     public EdgeType edgeType;
     public EdgeSide edgeSide;
+    public static double ARROW_HEAD_X_POS_OFFSET = ((double) RectangleCell.width)/3.0/2.0;
+    public static double ARROW_HEAD_Y_POS_OFFSET = ((double) RectangleCell.height)/4.0/2.0;
 
     protected Edge() {}
     public Edge(Cell source, Cell target, EdgeType edgeType, EdgeSide edgeSide) {
@@ -27,6 +29,7 @@ public class Edge extends Group {
                 line.getStyleClass().add("loop");
                 break;
             case CHILD:
+                line.getStyleClass().add("child");
                 break;
             case ANCESTOR:
                 line.getStyleClass().add("ancestor");

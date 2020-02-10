@@ -29,6 +29,8 @@ public class PatriciaTreeVisualization extends Application {
     // to run via console:
     // export MAVEN_OPTS="-Xms1024M -Xmx2048M -Xss4M -XX:MaxMetaspaceSize=4096M"
     // mvn clean javafx:run -e -X
+    // or
+    // mvnDebug clean javafx:run -e -X
 
     public static void main(String[] args) {
         launch();
@@ -72,7 +74,7 @@ public class PatriciaTreeVisualization extends Application {
     private void addComponentsToGraph(Graph graph, PatriciaTree patriciaTree) {
         Model model = graph.getModel();
         graph.beginUpdate();
-        allCells = getSubTreeCells(patriciaTree.getHeader());
+        allCells = getSubTreeCells(patriciaTree.getHeader(), patriciaTree);
         System.out.println(">>> created patricia tree's nodes <<<");
         allEdges = initAllEdges(patriciaTree);
         System.out.println(">>> created patricia tree's branches <<<");
@@ -105,15 +107,21 @@ public class PatriciaTreeVisualization extends Application {
         graph.endUpdate();
     }
 
-    private LinkedList<Cell> getSubTreeCells(PatriciaNode currentSubTreeRoot) {
+    private LinkedList<Cell> getSubTreeCells(PatriciaNode currentSubTreeRoot, PatriciaTree patriciaTree) {
         LinkedList<Cell> cells = new LinkedList<>();
         int id = currentSubTreeRoot.getId();
-        int key = currentSubTreeRoot.getKey();
         int skip = currentSubTreeRoot.getSkip();
-        RectangleCell currentCell = new RectangleCell(id, key, skip);
+        int key = currentSubTreeRoot.getKey();
+        String word = null;
+        try {
+            word = "\"" + patriciaTree.getFileOps().getFileOpsStrategy().getWordStringFromFileStartingAtPosition(currentSubTreeRoot.getKey()) + "\"";
+        } catch (Exception e) {
+            word = e.getClass().getSimpleName();
+        }
+        RectangleCell currentCell = new RectangleCell(id, skip, key, word);
         cells.add(currentCell);
-        if(!currentSubTreeRoot.getIsLeftAncestor() && currentSubTreeRoot.getLeftLink()!=null) cells.addAll( getSubTreeCells(currentSubTreeRoot.getLeftLink()) );
-        if(!currentSubTreeRoot.getIsRightAncestor() && currentSubTreeRoot.getRightLink()!=null) cells.addAll( getSubTreeCells(currentSubTreeRoot.getRightLink()) );
+        if(!currentSubTreeRoot.getIsLeftAncestor() && currentSubTreeRoot.getLeftLink()!=null) cells.addAll( getSubTreeCells(currentSubTreeRoot.getLeftLink(), patriciaTree) );
+        if(!currentSubTreeRoot.getIsRightAncestor() && currentSubTreeRoot.getRightLink()!=null) cells.addAll( getSubTreeCells(currentSubTreeRoot.getRightLink(), patriciaTree) );
         return cells;
     }
 

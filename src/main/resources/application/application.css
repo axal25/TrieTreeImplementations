@@ -3,13 +3,17 @@
 }
 
 .ancestor {
-    -fx-stroke-width: 5;
+    -fx-stroke-width: 7.5;
     -fx-stroke: #018a23;
-    -fx-stroke-dash-array: 0.5 15 15 0.5;
+    -fx-stroke-dash-array: 20 1 1 20;
 }
 
 .loop {
     -fx-stroke-width: 2;
     -fx-stroke: #f55d42;
-    /*-fx-stroke-dash-array: 0.5 15 15 0.5;*/
+}
+
+.child {
+    -fx-stroke-width: 2;
+    -fx-stroke: black;
 }

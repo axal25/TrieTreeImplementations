@@ -6,12 +6,11 @@ import agh.jo.knuth.patricia.PatriciaTree;
 import java.util.List;
 
 public class PatriciaTreeLayout extends Layout {
-    public static int X_POSITION_SPACING_AT_MAX_LEVEL = 2*RectangleCell.width;
-    public int positionXOffset = -1;
-    public static int POSITION_Y_OFFSET = 100;
+    public static double X_POSITION_SPACING_AT_MAX_LEVEL = RectangleCell.width;
+    public double positionXOffset = -1;
+    public static double POSITION_Y_OFFSET = 100;
     public static double POSITION_X_OFFSET_RATIO_MULTIPLIER = 0.5;
     private Graph graph;
-//    private Random random = new Random();
 
     public PatriciaTreeLayout(Graph graph) { this.graph = graph; }
     public void execute() {}
@@ -30,8 +29,8 @@ public class PatriciaTreeLayout extends Layout {
         for (Cell cell : cells) {
             if(cell.cellId.compareTo(String.valueOf(currentSubTreeRoot.getId())) ==  0) {
                 xOffsetRatio = POSITION_X_OFFSET_RATIO_MULTIPLIER * xOffsetRatio;
-                double x = previousCellX + (-1 * xOffsetRatio * positionXOffset) - ((double) X_POSITION_SPACING_AT_MAX_LEVEL/2);
-                double y = previousCellY + (+1 * POSITION_Y_OFFSET);
+                double x = previousCellX - (xOffsetRatio * positionXOffset) - ((double) X_POSITION_SPACING_AT_MAX_LEVEL/2.0);
+                double y = previousCellY + POSITION_Y_OFFSET;
                 cell.relocate(x, y);
                 positionSubTreeCells(currentSubTreeRoot, cells, x, y, xOffsetRatio);
             }
@@ -42,8 +41,8 @@ public class PatriciaTreeLayout extends Layout {
         for (Cell cell : cells) {
             if(cell.cellId.compareTo(String.valueOf(currentSubTreeRoot.getId())) ==  0) {
                 xOffsetRatio = POSITION_X_OFFSET_RATIO_MULTIPLIER * xOffsetRatio;
-                double x = previousCellX + (+1 * xOffsetRatio * positionXOffset) + ((double) X_POSITION_SPACING_AT_MAX_LEVEL/2);
-                double y = previousCellY + (+1 * POSITION_Y_OFFSET);
+                double x = previousCellX + (xOffsetRatio * positionXOffset) + ((double) X_POSITION_SPACING_AT_MAX_LEVEL/2.0);
+                double y = previousCellY + (POSITION_Y_OFFSET);
                 cell.relocate(x, y);
                 positionSubTreeCells(currentSubTreeRoot, cells, x, y, xOffsetRatio);
             }
@@ -52,12 +51,11 @@ public class PatriciaTreeLayout extends Layout {
 
     private void initPositionXOffSet(PatriciaTree patriciaTree) {
         int patriciaTreeMaxLevel = getMaxLevel(patriciaTree);
-        int rectangleWidth = RectangleCell.width;
-        double positionXOffSetDouble = (double) rectangleWidth / 2;
+        double positionXOffSetDouble = X_POSITION_SPACING_AT_MAX_LEVEL;
         for (int i = 0; i < patriciaTreeMaxLevel; i++) {
-            positionXOffSetDouble = positionXOffSetDouble * 2;
+            positionXOffSetDouble = positionXOffSetDouble * 2.0;
         }
-        this.positionXOffset = (int) Math.round(positionXOffSetDouble);
+        this.positionXOffset = positionXOffSetDouble;
     }
 
     private int getMaxLevel(PatriciaTree patriciaTree) {

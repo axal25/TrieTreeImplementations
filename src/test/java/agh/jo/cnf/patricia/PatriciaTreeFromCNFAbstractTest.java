@@ -4,7 +4,7 @@ import agh.jo.cnf.converter.CNFConverter;
 import agh.jo.knuth.patricia.Encoding;
 import agh.jo.knuth.patricia.PatriciaTree;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
-import agh.jo.knuth.patricia.file.ops.exceptions.NextWordStartIndexNotFound;
+import agh.jo.knuth.patricia.file.ops.exceptions.NextWordStartIndexNotFoundException;
 
 import java.util.Arrays;
 
@@ -43,7 +43,7 @@ public abstract class PatriciaTreeFromCNFAbstractTest {
                 nextPosition = patriciaTree.getFileOps().getFileOpsStrategy().findNextWordStartIndex(position);
                 System.out.println(cnfCounter + ". \"" + sortedCnf + "\"");
                 assertEquals(sortedCnf, key);
-            } catch (NextWordStartIndexNotFound e) {
+            } catch (NextWordStartIndexNotFoundException e) {
                 sortedCnf = new StringBuilder().append(sortedCnf).append(cnfConverter.getCnfWriter().getOutputEOF()).toString();
                 System.out.println(cnfCounter + ". \"" + sortedCnf + "\"");
                 assertEquals(sortedCnf, key);

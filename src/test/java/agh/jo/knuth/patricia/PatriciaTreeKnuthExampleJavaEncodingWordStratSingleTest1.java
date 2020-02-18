@@ -1,6 +1,6 @@
 package agh.jo.knuth.patricia;
 
-import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
+import agh.jo.utils.intf.FunctionalInterfaceVoidReturn;
 import agh.jo.knuth.patricia.file.ops.FileOpsStrategyAbstractTest;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
 import org.junit.jupiter.api.DisplayName;

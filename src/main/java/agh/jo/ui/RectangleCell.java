@@ -14,8 +14,9 @@ import lombok.Setter;
 public class RectangleCell extends Cell {
     public static double width = 100;
     public static double height = 125;
-    public static int TEXT_Y_POSITION_OFFSET = 25;
-    public static int PADDING = 5;
+    public final static int TEXT_Y_POSITION_OFFSET = 25;
+    public final static int PADDING = 5;
+    public final static int DISPLAY_WORD_LENGTH_LIMIT = 13;
 
     private Text textId;
     private Text textKey;
@@ -29,7 +30,14 @@ public class RectangleCell extends Cell {
         this.textId = new Text(PADDING, 0 * TEXT_Y_POSITION_OFFSET +PADDING, "id: " + id);
         this.textSkip = new Text(PADDING, 1 * TEXT_Y_POSITION_OFFSET +PADDING, "skip: " + skip);
         this.textKey = new Text(PADDING, 2 * TEXT_Y_POSITION_OFFSET +PADDING, "key: " + key);
-        this.textWord = new Text(PADDING, 3 * TEXT_Y_POSITION_OFFSET +PADDING, word);
+        String displayWord = null;
+        if(word.length() > DISPLAY_WORD_LENGTH_LIMIT) {
+            displayWord = new StringBuilder()
+                    .append(
+                            word.substring(0, DISPLAY_WORD_LENGTH_LIMIT-3)
+                    ).append("...").toString();
+        } else displayWord = word;
+        this.textWord = new Text(PADDING, 3 * TEXT_Y_POSITION_OFFSET +PADDING, displayWord);
 
         this.rectangle = new Rectangle(width, height);
         this.rectangle.setStroke(Color.BLACK);

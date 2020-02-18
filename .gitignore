@@ -26,6 +26,7 @@
 hs_err_pid*
 
 target/*
+!target/TrieTreeImplementations_complete_standalone.jar
 .idea/
 .mvn
 mvnw

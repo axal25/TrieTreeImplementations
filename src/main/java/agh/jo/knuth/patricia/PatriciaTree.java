@@ -2,7 +2,7 @@ package agh.jo.knuth.patricia;
 
 import agh.jo.knuth.patricia.file.ops.FileOps;
 import agh.jo.knuth.patricia.file.ops.WordStrategy;
-import agh.jo.knuth.patricia.file.ops.exceptions.NextWordStartIndexNotFound;
+import agh.jo.knuth.patricia.file.ops.exceptions.NextWordStartIndexNotFoundException;
 import agh.jo.utils.exceptions.NotForUseException;
 import lombok.Getter;
 
@@ -165,7 +165,7 @@ public class PatriciaTree {
     public void insertAllKeysIntoTree() throws Exception {
         try {
             while(true) insertNextKeyIntoTree();
-        } catch (NextWordStartIndexNotFound e) {}
+        } catch (NextWordStartIndexNotFoundException e) {}
     }
 
     /** Protected (internal) methods **/

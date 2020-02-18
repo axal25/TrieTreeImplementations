@@ -1,6 +1,5 @@
 package agh.jo.knuth.mix.machine;
 
-import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 

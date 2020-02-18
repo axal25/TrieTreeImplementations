@@ -23,8 +23,8 @@ public class PatriciaTreeVisualization extends Application {
     private List<Cell> allCells;
     private List<Edge> allEdges;
     private List<PatriciaNode> nodesToProcessForEdges;
-    public static int[] patriciaTreesExampleIndexes = {0, 1, 2, 3, 4, 5, 6};
     public static int DOT_PRINT_ITERATION_SPACING = 100;
+    public static PatriciaTree patriciaTree = null;
 
     // to run via console:
     // export MAVEN_OPTS="-Xms1024M -Xmx2048M -Xss4M -XX:MaxMetaspaceSize=4096M"
@@ -32,9 +32,7 @@ public class PatriciaTreeVisualization extends Application {
     // or
     // mvnDebug clean javafx:run -e -X
 
-    public static void main(String[] args) {
-        launch();
-    }
+    public static void main(String[] args) { launch(); }
 
     @Override
     public void start(Stage primaryStage) {
@@ -48,13 +46,13 @@ public class PatriciaTreeVisualization extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        PatriciaTree patriciaTree = Examples.getExamplePatriciaTree(patriciaTreesExampleIndexes[6]);
+        if(this.patriciaTree == null) this.patriciaTree = Examples.getExamplePatriciaTree(0, false);
         System.out.println(">>> creating patricia tree visualization <<<");
-        addComponentsToGraph(graph, patriciaTree);
+        addComponentsToGraph(graph, this.patriciaTree);
         System.out.println(">>> created patricia tree visualization <<<");
 
         PatriciaTreeLayout patriciaTreeLayout = new PatriciaTreeLayout(graph);
-        patriciaTreeLayout.execute(patriciaTree);
+        patriciaTreeLayout.execute(this.patriciaTree);
         patriciaTreeLayout.positionHelperNodes(graph);
     }
 

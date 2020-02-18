@@ -1,6 +1,6 @@
 package agh.jo.cnf.converter;
 
-import agh.jo.utils.file.RandomAccessReadContainer;
+import agh.jo.utils.file.RandomAccessFileContainer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +14,7 @@ public class CNFWriter {
     private String outFileName;
     private char EOCNF;
     private char outputEOF;
-    private RandomAccessReadContainer randomAccessReadContainer = null;
+    private RandomAccessFileContainer randomAccessFileContainer = null;
 
     protected CNFWriter(String outFilePath, String outFileName, char EOCNF, char outputEOF) {
         setOutFilePath(outFilePath);
@@ -28,23 +28,26 @@ public class CNFWriter {
     }
 
     public void writeCNF(String inputCNF) throws IOException {
-        if(randomAccessReadContainer == null) {
-            randomAccessReadContainer = new RandomAccessReadContainer(this.outFilePath, this.outFileName);
-            randomAccessReadContainer.seek(0);
+        if(randomAccessFileContainer == null) {
+            randomAccessFileContainer = new RandomAccessFileContainer(this.outFilePath, this.outFileName);
+            randomAccessFileContainer.seek(0);
         }
-        randomAccessReadContainer.getRandomAccessFile().write(
+        randomAccessFileContainer.getRandomAccessFile().write(
                 new StringBuilder().append(inputCNF).append(this.EOCNF).toString().getBytes(StandardCharsets.UTF_8)
         );
     }
 
     public void close() {
         try {
-            randomAccessReadContainer.getRandomAccessFile().write(
+            randomAccessFileContainer.getRandomAccessFile().write(
                     new StringBuilder().append(outputEOF).toString().getBytes(StandardCharsets.UTF_8)
             );
         } catch (IOException e) {
             e.printStackTrace();
         }
-        randomAccessReadContainer.close();
+        if(randomAccessFileContainer!=null) {
+            randomAccessFileContainer.close();
+            randomAccessFileContainer = null;
+        }
     }
 }

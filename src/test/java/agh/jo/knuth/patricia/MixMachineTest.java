@@ -1,7 +1,6 @@
 package agh.jo.knuth.patricia;
 
-import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
-import agh.jo.knuth.mix.machine.MixEncoding;
+import agh.jo.utils.intf.FunctionalInterfaceVoidReturn;
 import agh.jo.knuth.mix.machine.MixEncodingTest;
 import org.junit.jupiter.api.*;
 

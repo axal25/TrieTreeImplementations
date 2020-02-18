@@ -1,6 +1,6 @@
 package agh.jo.knuth.patricia.file.ops;
 
-import agh.jo.utils.file.RandomAccessReadContainer;
+import agh.jo.utils.file.RandomAccessFileContainer;
 
 public class WordSingleStrategy extends FileOpsStrategy {
     protected WordSingleStrategy(FileOps owner, String filePath, String fileName, char charEOF, char charEOK) {
@@ -13,17 +13,17 @@ public class WordSingleStrategy extends FileOpsStrategy {
         boolean isEOFEncountered = false;
         String singleCharacter = null;
         StringBuilder wholeKeyString = new StringBuilder();
-        RandomAccessReadContainer randomAccessReadContainer = new RandomAccessReadContainer(this.getFilePath(), this.getFileName());
+        RandomAccessFileContainer randomAccessFileContainer = new RandomAccessFileContainer(this.getFilePath(), this.getFileName());
         while(!isEOFEncountered) {
-            if(singleCharacter == null) singleCharacter = readOneCharAtPositionToString(randomAccessReadContainer, newKeyStartIndex);
-            else singleCharacter = readNextCharToString(randomAccessReadContainer);
+            if(singleCharacter == null) singleCharacter = readOneCharAtPositionToString(randomAccessFileContainer, newKeyStartIndex);
+            else singleCharacter = readNextCharToString(randomAccessFileContainer);
             if(singleCharacter == null) break;
             if(isEOKEncountered && !isEOFEncountered && !isSingleCharacterEOKorEOF(singleCharacter)) break;
             if(singleCharacter.charAt(0) == this.getCharEOF()) isEOFEncountered = true;
             if(singleCharacter.charAt(0) == this.getCharEOK()) isEOKEncountered = true;
             wholeKeyString.append(singleCharacter);
         }
-        randomAccessReadContainer.close();
+        randomAccessFileContainer.close();
         return wholeKeyString.toString();
     }
 
@@ -35,10 +35,10 @@ public class WordSingleStrategy extends FileOpsStrategy {
         boolean isCharEOKEncountered = false;
         int amountOfBitsRead = 0;
         String singleCharacter = null;
-        RandomAccessReadContainer randomAccessReadContainer = new RandomAccessReadContainer(this.getFilePath(), this.getFileName());
+        RandomAccessFileContainer randomAccessFileContainer = new RandomAccessFileContainer(this.getFilePath(), this.getFileName());
         while(!isExceptionEOFEncountered && !isCharEOFEncountered && amountOfBitsRead < requestedAmountOfBits) {
-            if(singleCharacter == null) singleCharacter = readOneCharAtPositionToString(randomAccessReadContainer, position);
-            else singleCharacter = readNextCharToString(randomAccessReadContainer);
+            if(singleCharacter == null) singleCharacter = readOneCharAtPositionToString(randomAccessFileContainer, position);
+            else singleCharacter = readNextCharToString(randomAccessFileContainer);
 
             if(singleCharacter == null) isExceptionEOFEncountered = true;
             if(isCharEOKEncountered && singleCharacter.charAt(0) != this.getCharEOF() && singleCharacter.charAt(0) != this.getCharEOK())  break;
@@ -48,7 +48,7 @@ public class WordSingleStrategy extends FileOpsStrategy {
             if(singleCharacter.charAt(0) == this.getCharEOF()) isCharEOFEncountered = true;
             if(singleCharacter.charAt(0) == this.getCharEOK()) isCharEOKEncountered = true;
         }
-        randomAccessReadContainer.close();
+        randomAccessFileContainer.close();
         return numberOfCharsFromFileAtPosition.toString();
     }
 }

@@ -1,6 +1,6 @@
 package agh.jo.cnf.converter;
 
-import agh.jo.utils.file.RandomAccessReadContainer;
+import agh.jo.utils.file.RandomAccessFileContainer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,7 @@ import lombok.Setter;
 public class CNFReader {
     private String inFilePath;
     private String inFileName;
-    private RandomAccessReadContainer randomAccessReadContainer = null;
+    private RandomAccessFileContainer randomAccessFileContainer = null;
     public final int LINE_CHAR_LIMIT = 10000;
     public final char INPUT_DELIMITER = CNFConverter.INPUT_DELIMITER;
 
@@ -66,17 +66,17 @@ public class CNFReader {
     }
 
     public String readWord() throws Exception {
-        if(randomAccessReadContainer == null) {
-            randomAccessReadContainer = new RandomAccessReadContainer(this.inFilePath, this.inFileName);
-            randomAccessReadContainer.seek(0);
+        if(randomAccessFileContainer == null) {
+            randomAccessFileContainer = new RandomAccessFileContainer(this.inFilePath, this.inFileName);
+            randomAccessFileContainer.seek(0);
         }
         int charCounter = 0;
         StringBuilder stringBuilder = new StringBuilder();
-        String currChar = readNextCharToString(randomAccessReadContainer);
+        String currChar = readNextCharToString(randomAccessFileContainer);
         stringBuilder.append(getEmptyIfNull(currChar));
         charCounter = 1;
         while(currChar!=null && !currChar.isEmpty() && currChar.charAt(0) != INPUT_DELIMITER && !isStringEndingOnEOL(currChar) && charCounter < LINE_CHAR_LIMIT) {
-            currChar = readNextCharToString(randomAccessReadContainer);
+            currChar = readNextCharToString(randomAccessFileContainer);
             stringBuilder.append(getEmptyIfNull(currChar));
             charCounter++;
         }
@@ -89,11 +89,14 @@ public class CNFReader {
     }
 
     public void close() {
-        randomAccessReadContainer.close();
+        if(randomAccessFileContainer!=null) {
+            randomAccessFileContainer.close();
+            randomAccessFileContainer = null;
+        }
     }
 
-    protected String readNextCharToString(RandomAccessReadContainer randomAccessReadContainer) throws Exception {
-        String charInString = randomAccessReadContainer.getNextCharToString();
+    protected String readNextCharToString(RandomAccessFileContainer randomAccessFileContainer) throws Exception {
+        String charInString = randomAccessFileContainer.getNextCharToString();
         if (charInString != null && charInString.length()!=1) throw new Exception("Character could not be retrieved. String retrieved at that location was not a single character - retrieved string: " + charInString);
         return charInString;
     }

@@ -62,6 +62,11 @@ public class PatriciaNode {
         representation.append("skip = ").append(skip).append(",\n");
         for (int i = 0; i < level+1; i++) representation.append("\t");
 
+        representation.append("isLeftAncestor = ").append(isLeftAncestor).append(",\n");
+        for (int i = 0; i < level+1; i++) representation.append("\t");
+        representation.append("isRightAncestor = ").append(isRightAncestor).append(",\n");
+        for (int i = 0; i < level+1; i++) representation.append("\t");
+
         if(leftLink == null) representation.append("leftLink = ").append(leftLink);
         else if(isLeftAncestor) representation.append("leftLink.id = ").append(leftLink.id);
         else representation.append("leftLink = ").append(leftLink.toString(level+1));

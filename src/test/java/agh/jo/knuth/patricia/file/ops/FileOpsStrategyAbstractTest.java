@@ -1,6 +1,6 @@
 package agh.jo.knuth.patricia.file.ops;
 
-import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
+import agh.jo.utils.intf.FunctionalInterfaceVoidReturn;
 import agh.jo.knuth.patricia.Encoding;
 import agh.jo.knuth.patricia.MixMachine;
 import agh.jo.knuth.patricia.PatriciaTree;

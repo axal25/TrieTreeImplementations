@@ -1,6 +1,6 @@
 package agh.jo.knuth.patricia;
 
-import agh.jo.func.intf.FunctionalInterfaceVoidReturn;
+import agh.jo.utils.intf.FunctionalInterfaceVoidReturn;
 import agh.jo.knuth.mix.machine.MixEncoding;
 import agh.jo.knuth.patricia.file.ops.FileOpsStrategyAbstractTest;
 import agh.jo.knuth.patricia.file.ops.WordStartPositionToEOFStrategyMixTest3;
@@ -50,6 +50,8 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = true,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink.id = 0,\n" +
                     "\trightLink = null\n" +
                     "}",
@@ -57,10 +59,14 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = false,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink = PatriciaNode{\n" +
                     "\t\tid = 1,\n" +
                     "\t\tkey = 6,\n" +
                     "\t\tskip = 0,\n" +
+                    "\t\tisLeftAncestor = true,\n" +
+                    "\t\tisRightAncestor = true,\n" +
                     "\t\tleftLink.id = 1,\n" +
                     "\t\trightLink.id = 0\n" +
                     "\t},\n" +
@@ -70,15 +76,21 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = false,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink = PatriciaNode{\n" +
                     "\t\tid = 1,\n" +
                     "\t\tkey = 6,\n" +
                     "\t\tskip = 0,\n" +
+                    "\t\tisLeftAncestor = true,\n" +
+                    "\t\tisRightAncestor = false,\n" +
                     "\t\tleftLink.id = 1,\n" +
                     "\t\trightLink = PatriciaNode{\n" +
                     "\t\t\tid = 2,\n" +
                     "\t\t\tkey = 12,\n" +
                     "\t\t\tskip = 11,\n" +
+                    "\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink.id = 2,\n" +
                     "\t\t\trightLink.id = 0\n" +
                     "\t\t}\n" +
@@ -89,14 +101,20 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = false,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink = PatriciaNode{\n" +
                     "\t\tid = 1,\n" +
                     "\t\tkey = 6,\n" +
                     "\t\tskip = 0,\n" +
+                    "\t\tisLeftAncestor = false,\n" +
+                    "\t\tisRightAncestor = false,\n" +
                     "\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\tid = 3,\n" +
                     "\t\t\tkey = 17,\n" +
                     "\t\t\tskip = 4,\n" +
+                    "\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink.id = 3,\n" +
                     "\t\t\trightLink.id = 1\n" +
                     "\t\t},\n" +
@@ -104,6 +122,8 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\t\t\tid = 2,\n" +
                     "\t\t\tkey = 12,\n" +
                     "\t\t\tskip = 11,\n" +
+                    "\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink.id = 2,\n" +
                     "\t\t\trightLink.id = 0\n" +
                     "\t\t}\n" +
@@ -114,14 +134,20 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = false,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink = PatriciaNode{\n" +
                     "\t\tid = 1,\n" +
                     "\t\tkey = 6,\n" +
                     "\t\tskip = 0,\n" +
+                    "\t\tisLeftAncestor = false,\n" +
+                    "\t\tisRightAncestor = false,\n" +
                     "\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\tid = 3,\n" +
                     "\t\t\tkey = 17,\n" +
                     "\t\t\tskip = 4,\n" +
+                    "\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink.id = 3,\n" +
                     "\t\t\trightLink.id = 1\n" +
                     "\t\t},\n" +
@@ -129,10 +155,14 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\t\t\tid = 2,\n" +
                     "\t\t\tkey = 12,\n" +
                     "\t\t\tskip = 11,\n" +
+                    "\t\t\tisLeftAncestor = false,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\t\tid = 4,\n" +
                     "\t\t\t\tkey = 24,\n" +
                     "\t\t\t\tskip = 1,\n" +
+                    "\t\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\t\tisRightAncestor = true,\n" +
                     "\t\t\t\tleftLink.id = 4,\n" +
                     "\t\t\t\trightLink.id = 2\n" +
                     "\t\t\t},\n" +
@@ -145,18 +175,26 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = false,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink = PatriciaNode{\n" +
                     "\t\tid = 1,\n" +
                     "\t\tkey = 6,\n" +
                     "\t\tskip = 0,\n" +
+                    "\t\tisLeftAncestor = false,\n" +
+                    "\t\tisRightAncestor = false,\n" +
                     "\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\tid = 5,\n" +
                     "\t\t\tkey = 30,\n" +
                     "\t\t\tskip = 3,\n" +
+                    "\t\t\tisLeftAncestor = false,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\t\tid = 3,\n" +
                     "\t\t\t\tkey = 17,\n" +
                     "\t\t\t\tskip = 1,\n" +
+                    "\t\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\t\tisRightAncestor = true,\n" +
                     "\t\t\t\tleftLink.id = 3,\n" +
                     "\t\t\t\trightLink.id = 1\n" +
                     "\t\t\t},\n" +
@@ -166,10 +204,14 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\t\t\tid = 2,\n" +
                     "\t\t\tkey = 12,\n" +
                     "\t\t\tskip = 11,\n" +
+                    "\t\t\tisLeftAncestor = false,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\t\tid = 4,\n" +
                     "\t\t\t\tkey = 24,\n" +
                     "\t\t\t\tskip = 1,\n" +
+                    "\t\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\t\tisRightAncestor = true,\n" +
                     "\t\t\t\tleftLink.id = 4,\n" +
                     "\t\t\t\trightLink.id = 2\n" +
                     "\t\t\t},\n" +
@@ -182,23 +224,33 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\tid = 0,\n" +
                     "\tkey = 0,\n" +
                     "\tskip = 0,\n" +
+                    "\tisLeftAncestor = false,\n" +
+                    "\tisRightAncestor = false,\n" +
                     "\tleftLink = PatriciaNode{\n" +
                     "\t\tid = 1,\n" +
                     "\t\tkey = 6,\n" +
                     "\t\tskip = 0,\n" +
+                    "\t\tisLeftAncestor = false,\n" +
+                    "\t\tisRightAncestor = false,\n" +
                     "\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\tid = 6,\n" +
                     "\t\t\tkey = 36,\n" +
                     "\t\t\tskip = 1,\n" +
+                    "\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\tisRightAncestor = false,\n" +
                     "\t\t\tleftLink.id = 6,\n" +
                     "\t\t\trightLink = PatriciaNode{\n" +
                     "\t\t\t\tid = 5,\n" +
                     "\t\t\t\tkey = 30,\n" +
                     "\t\t\t\tskip = 2,\n" +
+                    "\t\t\t\tisLeftAncestor = false,\n" +
+                    "\t\t\t\tisRightAncestor = true,\n" +
                     "\t\t\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\t\t\tid = 3,\n" +
                     "\t\t\t\t\tkey = 17,\n" +
                     "\t\t\t\t\tskip = 1,\n" +
+                    "\t\t\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\t\t\tisRightAncestor = true,\n" +
                     "\t\t\t\t\tleftLink.id = 3,\n" +
                     "\t\t\t\t\trightLink.id = 1\n" +
                     "\t\t\t\t},\n" +
@@ -209,10 +261,14 @@ public class PatriciaTreeKnuthExampleMixEncodingWordStratSPTEOFTest3 extends Pat
                     "\t\t\tid = 2,\n" +
                     "\t\t\tkey = 12,\n" +
                     "\t\t\tskip = 11,\n" +
+                    "\t\t\tisLeftAncestor = false,\n" +
+                    "\t\t\tisRightAncestor = true,\n" +
                     "\t\t\tleftLink = PatriciaNode{\n" +
                     "\t\t\t\tid = 4,\n" +
                     "\t\t\t\tkey = 24,\n" +
                     "\t\t\t\tskip = 1,\n" +
+                    "\t\t\t\tisLeftAncestor = true,\n" +
+                    "\t\t\t\tisRightAncestor = true,\n" +
                     "\t\t\t\tleftLink.id = 4,\n" +
                     "\t\t\t\trightLink.id = 2\n" +
                     "\t\t\t},\n" +

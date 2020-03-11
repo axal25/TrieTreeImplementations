@@ -1,0 +1,126 @@
+OGÓLNE UWAGI
+	Nie stosować skrótów, ani angielskich słów w tytułach
+		Po polsku, opisowo
+		
+	co to INDEX vs. SPIS TREŚCI 
+		polskie słowo czy skrót/angielskie słowo
+		INDEX - słowniczek pojęć z nr. stron ???
+		
+	Projekt rozwiązania vs. Implementacja
+		(POD) Rozdział: "Przegląd algorytmów i metod"
+		
+	Nie chcemy rozdziałów z 1 sekcją
+
+1. Streszczenie
+	1.1. Cel pracy - Teza - Musi być na początku
+	1.2. Zakres pracy
+		Co dało sie wykonać, co nie, zawartość pracy
+		Czego nie udało się wykonać, niepowodzenia, problemy, nauczki
+	1.3. Autorski wkład
+		musi być jasne co jest autorskim wkładem
+		musi być proporcjonalny, wystarczający
+
+2. Część teoretyczna
+	2.0.1.* Podstawowe pojęcia
+	2.0.2.* Historia
+	2.1. Omówienie źródeł naukowych - przegląd, przekrój
+	2.2. Konkretne prace naukowe {
+		Wady zalety
+		Wizualizacja, diagramy
+		Zastosowania praktyczne
+			Naukowe
+			Komercyjne
+	} 
+
+3.1. Część praktyczna
+	3.1.1. Zarys programu {
+		Zastosowania praktyczne - Proof of concept
+		Argumentacja i krytyka
+	}
+	3.1.2. Stos technologiczny
+	3.1.3. Funkcjonalności {
+		Screeny, wizualizacja, diagramy
+	}
+	3.1.4. Zastosowane rozwiązania {
+		Algorytmy i struktury
+		Argumentacja i krytyka
+		Screeny, wizualizacja, diagramy, kod 
+	}
+3.2. Opis implementacji (drzew trie)
+	3.2.1. Zastosowane rozwiązania {
+		Algorytmy i struktury
+		Argumentacja i krytyka
+		Screeny, wizualizacja, diagramy, kod
+	}
+
+4.* Testy, eksperymenty
+	4.1.* rezultaty, wyniki {
+		Rodzaje testów (jednostkowe, wydajnościowe)
+		Warunki testów
+		Sprawdzenie czy wyniki nie są przekłamane przez entropię, randomowe czynniki
+		Zestawienie z istniejącymi rozwiązaniami
+		Testowanie tezy - czy drzewa trie rzeczywiście coś przyspieszają
+		Omówienie wyników
+		Wizualizacja, diagramy
+	}
+
+5.1. Możliwości rozszerzenia
+	4.1.1. Poprawki
+	4.1.2. Rozszerzenia
+	4.1.3. Usprawnienia
+
+Y. Podsumowanie
+
+
+Uwagi od promotora:
+1. Porzadne wprowadzenie - cele
+    > Celem pracy jest rozjaśnienie i uściślenie pojęć związanych ze strukturą nazywaną drzewem Trie oraz jednym z jego wariantów - drzewa Patricia. W literaturze oraz innych źródłach - jak na przykład artykuły znajdujące się na mniej lub bardziej technicznych stronach internetowych - pojęcie Trie pojawia się często i mimo, iż żadne z nich technicznie rzecz biorąc nie wprowadza czytelnika w błąd to rzadko przedstawia pełny obraz wymagań postawionych przed tą strukturą.
+    <TU MOŻNA PODAĆ LINKI do różnych struktur nazywających się trie> [PUNKT 3.]
+2. Część teoretyczna -> Wprowadzenie teoretyczne, Wprowadzenie teoretyczne do problemów
+4. Tablice - opisy (caption) - w kolumnach jest X, w wierszach jest Y... Figury mają być częścią samodzielną, żeby przeczytać opis i było wiadomo o co chodzi. Jeżeli jest na podstawie czegoś (np. figury z książki Knuth'a) to musi być napisane skąd wzięte.
+6. Nie rozwijać już teorii.
+7. Robić część praktyczną.
+8. Moje zdanie - co to jest Patricia. Twórca ma większy autorytet ... [PUNKT 1.]
+9. Wylistować co dokładnie zrobiłem, wszystko opisać. Nie pozostawiać nic w domyśle.
+10. Usystematyzowanie w całej pracy pojęć: prefiks po polsku, Trie i Patricia, Java, MIX, ASCII, CNF kursywa i z  dużej
+
+11. Poprawiać odmianę angielską - zamiast Java'ę robimy \emph{Java}ę
+12. zrobieniu słowniczka czy jak się tam to nazywa. Zbiór pojęć ze stronami na których są czy coś
+
+--------------------------------------------
+Szablon - sprawdzic
+
+
+My, pierwsza osoba mnoga
+
+Cite, dla kilku
+
+- devis
+-- pauza
+--- 
+
+tylda przed ~\cite
+
+blad .\cite{}.
+
+
+wykasowac parametr [H]
+
+kod źr. -> źródłowy
+rys. -> rysunek
+
+Część praktyczna  - implementacja ....
+
+Wyliczanka zasłóg w postaci enumerate - w podsumowaniu
+
+DELETE - w strukturze drzewa -> przebudowa calego pod-drzewa; w pliku - przebudowa pod-drzewa + pozycje w pliku w lewo o X +++ inne operacje, ciężko zdefiniować w kontekście drzewa Patricia
+
+
+Uruchamianie
+
+schemat klas
+
+Poprawienie opisu testów
+
+Streszczenia - ang. pl.
+

@@ -1,5 +1,17 @@
 # TrieTreeImplementations
-Patricia tree implementation in accordance with directions from Knuth's book "The Art of Computer Programming vol. 3 Sorting and Searching 2nd edition"
+Patricia tree implementation in accordance with directions from Knuth's book "The Art of Computer Programming vol. 3 Sorting and Searching 2nd edition" section "Digital searching".
+
+# Thesis 
+This a program prepared for my engineering thesis. The thesis subject is "Trie tree implementation".
+
+# Written thesis
+You can find file with containing my written thesis in polish language at the [link](https://github.com/axal25/TrieTreeImplementations/latex/written_thesis/thesis.pdf). 
+
+The latex file needed to compile the written thesis can be found in [latex/written_thesis folder](https://github.com/axal25/TrieTreeImplementations/latex/written_thesis). 
+# Thesis presentation
+You can find file with containing my thesis presentation in polish language at the [link](https://github.com/axal25/TrieTreeImplementations/latex/thesis_presentation/presentation.pdf). 
+
+The latex file needed to compile the thesis presentation can be found in [latex/thesis_presentation folder](https://github.com/axal25/TrieTreeImplementations/latex/thesis_presentation). 
 
 # Launch options
 1. Main class (agh.jo.App): 

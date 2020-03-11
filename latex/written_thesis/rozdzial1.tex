@@ -1,0 +1,56 @@
+\setstretch{1.25}
+
+\chapter{Cele i założenia pracy}\label{cha:celeIZalozeniaPracy}
+	\section{Wprowadzenie}\label{sec:celeIZalozeniaPracyWprowadzenie}
+    Jedną z najbardziej znanych struktur danych są drzewa. Pełnią one kluczową funkcję w informatyce, od drzew decyzyjnych w algorytmach sztucznej inteligencji, po najprostsze drzewa binarne i pojawiają się w prawie każdej tematyce informatyki. Jeżeli w danej tematyce nie występuje wykorzystanie struktury drzewa, to pojawia się rozwiązane inspirowane hasłem ,,drzewo''. Wydaje się, iż mimo tego, że do stereotypu informatyka nie pasuje określenie miłośnika natury, to obraz drzewa jest głęboko zakorzeniony w naszych myślach.
+	
+	Celem niniejszej pracy jest analiza algorytmów tworzących i przeszukujących drzewa \emph{Trie} oraz implementacja tych dotyczących wybranego rodzaju drzewa w języku \emph{Java}. Część teoretyczna pracy oparta jest o wiele źródeł, ale w większości budowana jest na informacjach, które można znaleźć w książce Donalda Knuth'a ,,Sztuka programowania``~\cite{KnuthsTheArtOfComputerProgramming3}. Wykorzystanie tej książki wynika nie tylko ze względu na uznanie, jakim jej autor cieszy się w środowisku informatycznym, ale także z uwagi na to, iż ściśle naukowa literatura dokładniej opisująca strukturę drzew \emph{Trie} jest dość uboga.
+
+	Motywacją dla niniejszej pracy jest rozjaśnienie i uściślenie pojęć związanych ze strukturą nazywaną drzewem \emph{Trie} oraz jednym z jego wariantów -- drzewa \emph{Patricia}. W~literaturze oraz innych źródłach -- jak na przykład artykułach znajdujących się na mniej lub bardziej technicznych stronach i serwisach internetowych -- pojęcie \emph{Trie} pojawia się często. Mimo iż żadne z nich technicznie rzecz biorąc, nie wprowadza czytelnika w błąd, to rzadko przedstawia pełny obraz wymagań postawionych przed tą strukturą. Przykładami takich internetowych źródeł są~\cite{GFGTrieInserAndSearch,GFGAdvantagesOfTrieDataStructure,BaeldungComTrieJava,MediumComHowToBuildATrieTree,MediumComTryingToUnderstandTries}.
+	
+    Hipotezą, którą chcemy udowodnić w niniejszej pracy, jest stwierdzenie, mówiące o tym, że można zmodyfikować algorytmy Knuth'a dotyczące drzewa \emph{Patricia} tak, aby klucze mogły przyjmować postać pojedynczego słowa nie wpływając w sposób znaczący na przetwarzanie danych wewnątrz algorytmów oraz na samą strukturę drzewa. Mamy tu na myśli założenie, które mówi o tym, że klucz może rozpoczynać się w pozycji startowej przechowywanej w węźle drzewa -- tak jak opisuje to Knuth -- ale nie musi się kończyć znakiem końca pliku.
+	
+    Wstępnie obranie takiej hipotezy wynikało z wyróżniającego się sposobu określenia przez Knuth'a czym jest klucz. Klucze we wszystkich pozostałych algorytmach w tym rozdziale przyjmowały postać pojedynczego, rozłącznego słowa. W związku z tym chcieliśmy ujednolicić pojęcie klucza, tak aby czytelnik nie czuł się zagubiony, gdyż Knuth -- naszym zdaniem -- pozostawia w większości powód takiej reprezentacji klucza w domyśle. Myśl -- ,,Dlaczego definicja tego, czym jest klucz w tym algorytmie, tak bardzo różni się od innych opisanych w tym rozdziale?~'' -- nie opuszczała naszych głów przez cały proces próby zrozumienia algorytmu. Podejrzewaliśmy nawet, że jest to integralną częścią algorytmów opisanych przez Knuth'a i zmiana formy klucza, wiązałaby się z całkowitą modyfikacją przynajmniej części algorytmów.
+		
+	\section{Plan projektu}\label{sec:celePracyPlanProjektu}
+	
+	Celami teoretyczno-edukacyjnymi jakie przyjęliśmy w tej pracy są:
+	\begin{enumerate}
+	    \item Przedstawienie w przystępny sposób terminów drzewa \emph{Trie} i jego wariacji -- w tym drzewa \emph{Patricia},
+	    \item Omówienie operacji możliwych do przeprowadzenia na takich drzewach,
+	    \item Zaprezentowanie algorytmów definiujących poszczególne wariacje drzewa \emph{Trie} oraz,
+	    \item Rozważenie zalet i wad każdego z nich.
+	\end{enumerate} 
+	
+	W tym projekcie inżynierskim podejmujemy nie tylko próbę implementacji algorytmu opisanego przez Donalda Knuth'a, ale dodatkowo rozszerzenia wybranego algorytmu, zmieniając tym samym zastosowanie z bardzo specyficznego na bardziej uniwersalne. 
+	
+    Co więcej, aby zaprezentować trafność naszej implementacji i jej modyfikacji, implementujemy klasy symulujące reprezentację binarną znaków maszyny \emph{MIX}, wykorzystywaną przez Knuth'a w opisach algorytmów. Nasza symulowana maszyna \emph{MIX} ma możliwość zmiany długości pojedynczego bajta oraz gwarantuje istnienie dwóch specjalnych, sparametryzowanych znaków w jej tablicy kodowania znaków.
+	
+	Kolejnym autorskim wkładem jest próba zastosowania implementacji do rozwiązania problemu praktycznego, zadanego przez promotora tego projektu inżynierskiego -- dr inż. Radosława Klimka. W niniejszej pracy podejmujemy się rozwiązania problemu koniunkcyjnej postaci normalnej, zadanej w postaci plików formatu \emph{DIMACS CNF}. 
+	
+	W celu ułatwienia zrozumienia algorytmu, prostszej analizy danych oraz dla walorów edukacyjnych stworzona została również reprezentacja graficzna struktury powstałej w efekcie implementacji drzewa \emph{Patricia}.
+	
+	\section{Spodziewane rezultaty}\label{sec:celePracySpodziewaneRezultaty}
+	
+	W efekcie wykonania opisanych w poprzednim rozdziale działań spodziewamy się otrzymać rezultaty pozwalające nam na poniższe wnioski.
+	
+   Istnieje podział na różne rodzaje drzew \emph{Trie}, gdzie każdy z nich jest pewną modyfikacją rodzaju, na którym bazował. Mimo to istnieje jedna, prawdziwa struktura \emph{Trie}, a jego inne wariacje muszą przyjąć jasno rozróżniające je nazwy.
+
+    Jest możliwe zaimplementowanie algorytmów przedstawionych przez Knuth'a w~jednym z popularniejszych dzisiejszych języków, jakim jest \emph{Java}, mimo wielu założeń uproszczających przyjętych przez niego -- bardzo często związanych z reprezentacją binarną znaków fikcyjnej, niskopoziomowej maszyny \emph{MIX}.
+    
+    Można zmodyfikować algorytmy Knuth'a dotyczące drzewa \emph{Patricia} tak, aby klucze mogły przyjmować postać pojedynczego słowa, nie wpływając w sposób znaczący na przetwarzanie danych wewnątrz algorytmów oraz na samą strukturę drzewa.
+    
+    Implementacja wybranego rodzaju drzewa jest w stanie odpowiadać przynajmniej na część pytań dotyczącej charakterystyki zawartej w niej koniunkcyjnej postaci normalnej, przyjmując pewne założenia uproszczające.
+    
+    Wizualizacja wybranego rodzaju drzewa -- mimo iż nie może zobrazować dużych, złożonych problemów zawartych w strukturze drzewa -- przedstawia sobą walory edukacyjne oraz może pomóc w obrazowaniu uproszczonych problemów i w ten sposób wspierać proces rozumowania, oraz wnioskowania użytkownika.
+		
+	\section{Metodologia}\label{sec:celePracyMetodologia}
+	
+    Rozdział pierwszy jest rozdziałem wprowadzającym i przedstawiającym aspiracje wobec projektu inżynierskiego.
+    
+    Rozdział drugi poświęcony jest przedstawieniem wiedzy teoretycznej mającej na celu wyrównanie poziomu wiedzy w zakresie tematu projektu między autorem a czytelnikiem.
+    
+    Rozdział trzeci jest przeznaczony omówieniu w sposób szczegółowy zastosowanych podczas implementacji rozwiązań, których wyjaśnienie nie pojawiło się w poprzednich rozdziałach.
+    
+    Celem rozdziału czwartego jest podsumowanie pracy i osiągnięć w odniesieniu do spodziewanych rezultatów oraz hipotezy, które zawarte są w rozdziale pierwszym.
+		

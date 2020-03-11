@@ -1,0 +1,498 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{LatexTemplateAghDPlImir}{article}{}
+      \name{author}{1}{}{%
+        {{hash=338d5b0e0017451fa247f5947ad1c560}{%
+           family={Szymon\bibnamedelima Mikulicz},
+           familyi={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Marcin\bibnamedelima Szpyrka},
+           giveni={M\bibinitperiod\bibinitdelim S\bibinitperiod},
+           suffix={Marcel\bibnamedelima Piszak},
+           suffixi={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{338d5b0e0017451fa247f5947ad1c560}
+      \strng{fullhash}{338d5b0e0017451fa247f5947ad1c560}
+      \strng{bibnamehash}{338d5b0e0017451fa247f5947ad1c560}
+      \strng{authorbibnamehash}{338d5b0e0017451fa247f5947ad1c560}
+      \strng{authornamehash}{338d5b0e0017451fa247f5947ad1c560}
+      \strng{authorfullhash}{338d5b0e0017451fa247f5947ad1c560}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{polish}
+      \field{note}{Latex document template \href{https://github.com/Ashymad/aghdpl-imir/releases}{https://github.com/Ashymad/aghdpl-imir/releases}}
+      \field{title}{AghDPL, AghDPL-Imir}
+    \endentry
+    \entry{Jcoz}{article}{}
+      \name{author}{1}{}{%
+        {{hash=23f024f742442023be4350bf522d68d2}{%
+           family={Matthew\bibnamedelima Perron},
+           familyi={M\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={David\bibnamedelima Vernet},
+           giveni={D\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+      }
+      \strng{namehash}{23f024f742442023be4350bf522d68d2}
+      \strng{fullhash}{23f024f742442023be4350bf522d68d2}
+      \strng{bibnamehash}{23f024f742442023be4350bf522d68d2}
+      \strng{authorbibnamehash}{23f024f742442023be4350bf522d68d2}
+      \strng{authornamehash}{23f024f742442023be4350bf522d68d2}
+      \strng{authorfullhash}{23f024f742442023be4350bf522d68d2}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{note}{\href{http://decave.github.io/JCoz/}{http://decave.github.io/JCoz/}}
+      \field{title}{Java Casual Profiler (JCoz)}
+    \endentry
+    \entry{ThuesSelectedMathematicalPapers}{book}{}
+      \name{author}{1}{}{%
+        {{hash=ad8eaa115d7c7fdeb72e4133f49c4686}{%
+           family={Thue},
+           familyi={T\bibinitperiod},
+           given={Axel},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Oslo}%
+      }
+      \list{organization}{1}{%
+        {Universitetsforlaget}%
+      }
+      \strng{namehash}{ad8eaa115d7c7fdeb72e4133f49c4686}
+      \strng{fullhash}{ad8eaa115d7c7fdeb72e4133f49c4686}
+      \strng{bibnamehash}{ad8eaa115d7c7fdeb72e4133f49c4686}
+      \strng{authorbibnamehash}{ad8eaa115d7c7fdeb72e4133f49c4686}
+      \strng{authornamehash}{ad8eaa115d7c7fdeb72e4133f49c4686}
+      \strng{authorfullhash}{ad8eaa115d7c7fdeb72e4133f49c4686}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Selected Mathematical Paper}
+      \field{langid}{english}
+      \field{title}{Skrifter udgivne af Videnskabs-Selskabet i Christiania, MathematiskNaturvidenskabelig Klasse (1912), No. 1}
+      \field{year}{1977}
+      \field{pages}{413\bibrangedash 477}
+      \range{pages}{65}
+    \endentry
+    \entry{KnuthsTheArtOfComputerProgramming3}{book}{}
+      \name{author}{1}{}{%
+        {{hash=fcbea740aeb72b8e941e0d4aa9f6a9c6}{%
+           family={Knuth},
+           familyi={K\bibinitperiod},
+           given={Donald\bibnamedelima E.},
+           giveni={D\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA 02116, USA}%
+      }
+      \list{organization}{1}{%
+        {Stanford University}%
+      }
+      \list{publisher}{1}{%
+        {Mathematical Sciences Publishers (MSP)}%
+      }
+      \strng{namehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{fullhash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{bibnamehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{authorbibnamehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{authornamehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{authorfullhash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \field{sortinit}{5}
+      \field{sortinithash}{3c19c3776b658b3558e9e2e4840c01e2}
+      \field{labelnamesource}{author}
+      \field{booktitle}{The Art of Computer Programming}
+      \field{chapter}{6.3. Digital Searching}
+      \field{langid}{english}
+      \field{month}{6}
+      \field{note}{\href{https://linuxnasm.be/media/pdf/donald-knuth/taocp/volume-3/taocp-vol3-sorting-searching.pdf}{https://linuxnasm.be/media/pdf/donald-knuth/taocp/volume-3/taocp-vol3-sorting-searching.pdf}}
+      \field{volume}{3}
+      \field{year}{2014}
+      \field{pages}{624\bibrangedash 629}
+      \range{pages}{6}
+    \endentry
+    \entry{wikiMAry}{article}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={Wikipedia},
+           familyi={W\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Wikimedia Foundation, Inc.}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{bibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorbibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authornamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhash}{9c677286866aad38f8e9b660f5411814}
+      \field{sortinit}{6}
+      \field{sortinithash}{57e57fb8451e7fcfa45d1e069f6d3136}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{note}{\href{https://en.wikipedia.org/wiki/M-ary_tree}{https://www.en.wikipedia.org}}
+      \field{title}{M-ary tree}
+      \field{year}{2019}
+    \endentry
+    \entry{KnuthsTheArtOfComputerProgramming1}{book}{}
+      \name{author}{1}{}{%
+        {{hash=fcbea740aeb72b8e941e0d4aa9f6a9c6}{%
+           family={Knuth},
+           familyi={K\bibinitperiod},
+           given={Donald\bibnamedelima E.},
+           giveni={D\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston, MA 02116, USA}%
+      }
+      \list{organization}{1}{%
+        {Stanford University}%
+      }
+      \list{publisher}{1}{%
+        {Addison Wesley Longman}%
+      }
+      \strng{namehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{fullhash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{bibnamehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{authorbibnamehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{authornamehash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \strng{authorfullhash}{fcbea740aeb72b8e941e0d4aa9f6a9c6}
+      \field{sortinit}{7}
+      \field{sortinithash}{c818dd9105a2852444fc9f5e145c294e}
+      \field{labelnamesource}{author}
+      \field{booktitle}{The Art of Computer Programming}
+      \field{chapter}{2.3. Trees}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{volume}{1}
+      \field{year}{1997}
+      \field{pages}{308}
+      \range{pages}{1}
+    \endentry
+    \entry{stanfordKeithSchwarz}{article}{}
+      \name{author}{1}{}{%
+        {{hash=b418a0d9b9704d54f29f5f86050faa70}{%
+           family={Schwarz},
+           familyi={S\bibinitperiod},
+           given={Keith},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Stanford CS department}%
+      }
+      \strng{namehash}{b418a0d9b9704d54f29f5f86050faa70}
+      \strng{fullhash}{b418a0d9b9704d54f29f5f86050faa70}
+      \strng{bibnamehash}{b418a0d9b9704d54f29f5f86050faa70}
+      \strng{authorbibnamehash}{b418a0d9b9704d54f29f5f86050faa70}
+      \strng{authornamehash}{b418a0d9b9704d54f29f5f86050faa70}
+      \strng{authorfullhash}{b418a0d9b9704d54f29f5f86050faa70}
+      \field{sortinit}{8}
+      \field{sortinithash}{07edf88d4ea82509b9c4b4d13f41c452}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{note}{\href{http://web.stanford.edu/class/archive/cs/cs166/cs166.1146/lectures/15/Small15.pdf}{http://web.stanford.edu/class/archive/cs/cs166/cs166.1146/}}
+      \field{title}{CS 166: Data Structures, x-Fast and y-Fast Tries}
+    \endentry
+    \entry{CormensIntroductionToAlgorithms}{book}{}
+      \name{author}{1}{}{%
+        {{hash=fa6459b3140808e87d257400bb0bed1d}{%
+           family={Stein},
+           familyi={S\bibinitperiod},
+           given={Thomas\bibnamedelimb H.\bibnamedelimi Cormen\bibnamedelimb \& Charles\bibnamedelimb E.\bibnamedelimi Leiserson\bibnamedelimb \& Ronald\bibnamedelimb L.\bibnamedelimi Rivest\bibnamedelimb \&\bibnamedelima Clifford},
+           giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod\bibinitdelim C\bibinitperiod\bibinitdelim \~C\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim \~R\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim \~C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cambridge, Massachusetts, USA | London, England}%
+      }
+      \list{organization}{1}{%
+        {Massachusetts Institute of Technology}%
+      }
+      \list{publisher}{1}{%
+        {The MIT Press}%
+      }
+      \strng{namehash}{fa6459b3140808e87d257400bb0bed1d}
+      \strng{fullhash}{fa6459b3140808e87d257400bb0bed1d}
+      \strng{bibnamehash}{fa6459b3140808e87d257400bb0bed1d}
+      \strng{authorbibnamehash}{fa6459b3140808e87d257400bb0bed1d}
+      \strng{authornamehash}{fa6459b3140808e87d257400bb0bed1d}
+      \strng{authorfullhash}{fa6459b3140808e87d257400bb0bed1d}
+      \field{sortinit}{9}
+      \field{sortinithash}{1dd72ab054147731c9d824b49aba0534}
+      \field{labelnamesource}{author}
+      \field{booktitle}{Introduction to Algorithms}
+      \field{chapter}{20-2}
+      \field{edition}{3}
+      \field{langid}{english}
+      \field{year}{2009}
+      \field{pages}{558}
+      \range{pages}{1}
+    \endentry
+    \entry{BaeldungComTrieJava}{article}{}
+      \name{author}{1}{}{%
+        {{hash=14f74868dbbf84db1de2f9e31432db52}{%
+           family={Morina},
+           familyi={M\bibinitperiod},
+           given={Fatos},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{14f74868dbbf84db1de2f9e31432db52}
+      \strng{fullhash}{14f74868dbbf84db1de2f9e31432db52}
+      \strng{bibnamehash}{14f74868dbbf84db1de2f9e31432db52}
+      \strng{authorbibnamehash}{14f74868dbbf84db1de2f9e31432db52}
+      \strng{authornamehash}{14f74868dbbf84db1de2f9e31432db52}
+      \strng{authorfullhash}{14f74868dbbf84db1de2f9e31432db52}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{note}{\href{https://www.baeldung.com/trie-java}{https://www.baeldung.com}}
+      \field{title}{The Trie Data Structure in Java}
+      \field{year}{2019}
+    \endentry
+    \entry{GFGTrieInserAndSearch}{article}{}
+      \name{author}{1}{}{%
+        {{hash=23e698fee5b5d99cf93e04e405fc9421}{%
+           family={Sanaka},
+           familyi={S\bibinitperiod},
+           given={Venkateswara\bibnamedelima Rao},
+           giveni={V\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {GeeksForGeeks, Software AG (APAMA Analytics)}%
+      }
+      \strng{namehash}{23e698fee5b5d99cf93e04e405fc9421}
+      \strng{fullhash}{23e698fee5b5d99cf93e04e405fc9421}
+      \strng{bibnamehash}{23e698fee5b5d99cf93e04e405fc9421}
+      \strng{authorbibnamehash}{23e698fee5b5d99cf93e04e405fc9421}
+      \strng{authornamehash}{23e698fee5b5d99cf93e04e405fc9421}
+      \strng{authorfullhash}{23e698fee5b5d99cf93e04e405fc9421}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{note}{\href{https://www.geeksforgeeks.org/trie-insert-and-search/}{https://www.geeksforgeeks.org}}
+      \field{title}{Trie | (Insert and Search)}
+    \endentry
+    \entry{GFGAdvantagesOfTrieDataStructure}{article}{}
+      \name{author}{1}{}{%
+        {{hash=73e5a3903c1d83245544489c7c763040}{%
+           family={vero},
+           familyi={v\bibinitperiod},
+           given={Sakshi\bibnamedelima Tiwari},
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod},
+           prefix={aka.},
+           prefixi={a\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {GeeksForGeeks}%
+      }
+      \strng{namehash}{73e5a3903c1d83245544489c7c763040}
+      \strng{fullhash}{73e5a3903c1d83245544489c7c763040}
+      \strng{bibnamehash}{73e5a3903c1d83245544489c7c763040}
+      \strng{authorbibnamehash}{73e5a3903c1d83245544489c7c763040}
+      \strng{authornamehash}{73e5a3903c1d83245544489c7c763040}
+      \strng{authorfullhash}{73e5a3903c1d83245544489c7c763040}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{note}{\href{https://www.geeksforgeeks.org/advantages-trie-data-structure/}{https://www.geeksforgeeks.org}}
+      \field{title}{Advantages of Trie Data Structure}
+    \endentry
+    \entry{BriandaisWesternJointComputerConf}{article}{}
+      \name{author}{1}{}{%
+        {{hash=92a6903b9e1c361cc10ca866cce85996}{%
+           family={Briandais},
+           familyi={B\bibinitperiod},
+           given={René},
+           giveni={R\bibinitperiod},
+           prefix={de\bibnamedelima la},
+           prefixi={d\bibinitperiod\bibinitdelim l\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {AFIPS Press}%
+      }
+      \strng{namehash}{92a6903b9e1c361cc10ca866cce85996}
+      \strng{fullhash}{92a6903b9e1c361cc10ca866cce85996}
+      \strng{bibnamehash}{92a6903b9e1c361cc10ca866cce85996}
+      \strng{authorbibnamehash}{92a6903b9e1c361cc10ca866cce85996}
+      \strng{authornamehash}{92a6903b9e1c361cc10ca866cce85996}
+      \strng{authorfullhash}{92a6903b9e1c361cc10ca866cce85996}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proc. Western Joint Computer Conference}
+      \field{langid}{english}
+      \field{title}{File searching using variable length keys}
+      \field{volume}{15}
+      \field{year}{1959}
+      \field{pages}{295\bibrangedash 298}
+      \range{pages}{4}
+    \endentry
+    \entry{wikiMix}{article}{}
+      \name{author}{1}{}{%
+        {{hash=9c677286866aad38f8e9b660f5411814}{%
+           family={Wikipedia},
+           familyi={W\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Wikimedia Foundation, Inc.}%
+      }
+      \strng{namehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{fullhash}{9c677286866aad38f8e9b660f5411814}
+      \strng{bibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorbibnamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authornamehash}{9c677286866aad38f8e9b660f5411814}
+      \strng{authorfullhash}{9c677286866aad38f8e9b660f5411814}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{11}
+      \field{note}{\href{https://esolangs.org/wiki/MIX_(Knuth)}{https://en.wikipedia.org}}
+      \field{title}{MIX (Knuth)}
+      \field{year}{2019}
+    \endentry
+    \entry{inteviewCakeJavaBitShifting}{article}{}
+      \name{author}{1}{}{%
+        {{hash=8c3b7af2e17436adddd034e81badff8f}{%
+           family={Interviewcake.com},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Cake Labs, Inc.}%
+      }
+      \strng{namehash}{8c3b7af2e17436adddd034e81badff8f}
+      \strng{fullhash}{8c3b7af2e17436adddd034e81badff8f}
+      \strng{bibnamehash}{8c3b7af2e17436adddd034e81badff8f}
+      \strng{authorbibnamehash}{8c3b7af2e17436adddd034e81badff8f}
+      \strng{authornamehash}{8c3b7af2e17436adddd034e81badff8f}
+      \strng{authorfullhash}{8c3b7af2e17436adddd034e81badff8f}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{note}{\href{https://www.interviewcake.com/concept/java/bit-shift}{https://interviewcake.com}}
+      \field{title}{Bit Shifting (Java)}
+    \endentry
+    \entry{DZoneComWhyManyJavaPerformanceTestsAreWrong}{article}{}
+      \name{author}{1}{}{%
+        {{hash=3aca5acf10dd071c492ea95745be7bcc}{%
+           family={Etten},
+           familyi={E\bibinitperiod},
+           given={Daan},
+           giveni={D\bibinitperiod},
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {DZone}%
+      }
+      \strng{namehash}{3aca5acf10dd071c492ea95745be7bcc}
+      \strng{fullhash}{3aca5acf10dd071c492ea95745be7bcc}
+      \strng{bibnamehash}{3aca5acf10dd071c492ea95745be7bcc}
+      \strng{authorbibnamehash}{3aca5acf10dd071c492ea95745be7bcc}
+      \strng{authornamehash}{3aca5acf10dd071c492ea95745be7bcc}
+      \strng{authorfullhash}{3aca5acf10dd071c492ea95745be7bcc}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{note}{\href{https://dzone.com/articles/why-many-java-performance-test?fbclid=IwAR2J1Bm447KPmh50EC3UNFPFtFlX7CPJepFcmrd5g_0OGDs7PD6R-opc9yw}{https://dzone.com}}
+      \field{title}{Why Many Java Performance Tests are Wrong}
+      \field{year}{2009}
+    \endentry
+    \entry{EmeryBurgersPerformanceMatters}{article}{}
+      \name{author}{1}{}{%
+        {{hash=822f25153819e27e4b5894cd670547a3}{%
+           family={Berger},
+           familyi={B\bibinitperiod},
+           given={Emery},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Amherst, Massachusetts}%
+      }
+      \list{organization}{1}{%
+        {Department of Computer Science, University of Massachusetts}%
+      }
+      \strng{namehash}{822f25153819e27e4b5894cd670547a3}
+      \strng{fullhash}{822f25153819e27e4b5894cd670547a3}
+      \strng{bibnamehash}{822f25153819e27e4b5894cd670547a3}
+      \strng{authorbibnamehash}{822f25153819e27e4b5894cd670547a3}
+      \strng{authornamehash}{822f25153819e27e4b5894cd670547a3}
+      \strng{authorfullhash}{822f25153819e27e4b5894cd670547a3}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{note}{\href{https://www.youtube.com/watch?v=r-TLSBdHe1A}{https://www.youtube.com}}
+      \field{title}{Performance Matters}
+      \field{year}{2019}
+    \endentry
+    \entry{MediumComTryingToUnderstandTries}{article}{}
+      \name{author}{1}{}{%
+        {{hash=76ed935db3dd9ca4f4ba68ef38421e3a}{%
+           family={Avadhani},
+           familyi={A\bibinitperiod},
+           given={Amogh},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {A Medium Corporation (US)}%
+      }
+      \strng{namehash}{76ed935db3dd9ca4f4ba68ef38421e3a}
+      \strng{fullhash}{76ed935db3dd9ca4f4ba68ef38421e3a}
+      \strng{bibnamehash}{76ed935db3dd9ca4f4ba68ef38421e3a}
+      \strng{authorbibnamehash}{76ed935db3dd9ca4f4ba68ef38421e3a}
+      \strng{authornamehash}{76ed935db3dd9ca4f4ba68ef38421e3a}
+      \strng{authorfullhash}{76ed935db3dd9ca4f4ba68ef38421e3a}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{note}{\href{https://medium.com/@amogh.avadhani/how-to-build-a-trie-tree-in-java-9d144aaa0d01}{https://medium.com}}
+      \field{title}{How to build a Trie Tree in Java}
+      \field{year}{2018}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
